@@ -1,0 +1,43 @@
+// common
+@import "fonts";
+@import "common";
+@import "header";
+@import "navigation";
+@import "line-inputs";
+
+// start page
+@import "start-container";
+
+// calculator page
+@import "calculator";
+@import "agree-checkbox";
+
+// project page
+@import "projects-container";
+
+// delete pop up
+@import "delete-pop-up";
+
+// project pagination
+@import "projects-pagination-container";
+
+// result page
+@import "result-container";
+
+// eroor page 404
+@import "error-404";
+
+// admin tables page
+@import "admin-tables-container";
+
+// states
+@import "calculator-states";
+
+// states
+@import "pdf-generator";
+
+// opening types
+@import "opening-types-container";
+
+// media queries (should be in the end)
+@import "media";

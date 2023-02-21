@@ -1,0 +1,111 @@
+﻿@using REDAirCalculator.Models.ResultModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = null;
+
+    DescriptionModel descriptionModel = TempData["DescriptionModel"] as DescriptionModel;
+
+    bool isMulti = (bool)TempData["IsMulti"];
+    bool showAll = (bool)TempData["ShowAllResults"];
+}
+
+<div class="result-calculations-container">
+    <div class="result-calculations-tittle-container">
+        <h3 class="result-calculations-tittle">
+            @Model.InsulationSettingsText
+        </h3>
+    </div>
+    <div class="result-calculations-table-container">
+        <table class="result-calculations-table border table-striped table-hover table-responsive">
+            <colgroup>
+                <col class="col-Item-Number col-5">
+                <col class="col-Quantity col-3">
+                <col class="col-Description col-3">
+            </colgroup>
+            <thead class="calculations-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th>
+                        @Model.ItemNameColText
+                    </th>
+                    <th>
+                        @Model.ItemUnitsOfMeasurementColText
+                    </th>
+                    <th>
+                        @Model.ItemNumberColText
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@if (!descriptionModel.SelectedAll)
+                    {*@
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("baseRailSpacing", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        (@Model.Value("unit6", fallback: Fallback.ToDefaultValue))
+                    </td>
+                    <td>
+                        @descriptionModel.BaseRailSpacing
+                    </td>
+                </tr>
+                @*}*@
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("anchorScrewDistance", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        (@Model.Value("unit6", fallback: Fallback.ToDefaultValue))
+                    </td>
+                    <td>
+                        @descriptionModel.AnchorScrewDistance
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @if (!isMulti)
+                        {
+                            @Model.Value("compressionDepthFlex", fallback: Fallback.ToDefaultValue)
+                        }
+                        else
+                        {
+                            @Model.Value("compressionDepthMulti", fallback: Fallback.ToDefaultValue)
+                        }
+                    </td>
+                    <td>
+                        (@Model.Value("unit6", fallback: Fallback.ToDefaultValue))
+                    </td>
+                    <td>
+                        @descriptionModel.CompressionDepth
+                    </td>
+                </tr>
+                @if (isMulti && showAll)
+                {
+                    <tr class="calculations-table-row border">
+                        <td>
+                            @Model.Value("maxDistanceBetweenBrackets", fallback: Fallback.ToDefaultValue)
+                        </td>
+                        <td>
+                            (@Model.Value("unit6", fallback: Fallback.ToDefaultValue))
+                        </td>
+                        <td>
+                            @descriptionModel.MaxDistanceBetweenBrackets
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="result-description-container">
+    <div class="result-description-text-container">
+        <div class="result-description-text">
+            @Model.Value("descriptionText", fallback: Fallback.ToDefaultValue)
+        </div>
+    </div>
+</div>

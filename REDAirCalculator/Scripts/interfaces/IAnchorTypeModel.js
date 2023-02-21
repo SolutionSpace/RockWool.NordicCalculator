@@ -1,0 +1,1 @@
+//# sourceMappingURL=IAnchorTypeModel.js.map

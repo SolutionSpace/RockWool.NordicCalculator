@@ -1,0 +1,77 @@
+@import "variables.scss";
+
+.start-container {
+
+    p {
+        color: $startSubHeadingColor;
+    }
+
+    .start-picture {
+        margin: 0 auto;
+        margin-top: 55px;
+        margin-bottom: 20px;
+    }
+
+    @media only screen and (max-height: 900px) {
+        .start-picture {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            max-width: 350px;
+        }
+    }
+
+    .start-heading {
+        color: $startHeadingColor;
+        font-size: 50px;
+    }
+
+    .start-sub-heading {
+        color: $startSubHeadingColor;
+        margin-bottom: 60px;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .start-button {
+        width: 250px;
+        height: 200px;
+        background-color: $startButtonColor;
+        color: #333333;
+        font-size: 18px;
+        -moz-box-shadow: 0px 3px 5px 1px #ccc;
+        -webkit-box-shadow: 0px 3px 5px 1px #ccc;
+        box-shadow: 0px 3px 5px 1px #ccc;
+
+        .start-description {
+            margin-top: 10px;
+            font-size: 10px;
+        }
+
+        img {
+            width: 75px;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
+    .facade-btn {
+        /*margin-right: 10px;*/
+        img {
+            margin-bottom: 15px;
+            background-color: transparent;
+        }
+    }
+
+
+    .vinduer-btn {
+        margin-left: 10px;
+
+        img {
+            margin-bottom: 0px
+        }
+
+        @media only screen and (max-width: $smDevicesWidth) {
+            margin-left: 0;
+        }
+    }
+}

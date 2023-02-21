@@ -1,0 +1,27 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IEnumerable<IPublishedContent> rootNodes = UmbracoContext.ContentCache.GetAtRoot().First().Children();
+    TermsAndConditions termsAndConditionsPage = (TermsAndConditions)rootNodes.FirstOrDefault(d => d.ContentType.Alias == "termsAndConditions");
+}
+
+<div class="modal fade" id="termsAndConditionsModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body terms-conditions-container">
+
+                <button type="button" class="terms-conditions-close-btn close btn btn-lg disabled" data-dismiss="modal" aria-label="Close">
+                    ✕
+                </button>
+
+                <h3 class="modal-title project-title" id="emailProjectTitle"> @termsAndConditionsPage.Title  </h3>
+
+
+                <div class="form-group terms-conditions-text">
+                    @termsAndConditionsPage.Description
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

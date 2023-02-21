@@ -1,0 +1,122 @@
+﻿@using REDAirCalculator.Models.ResultViewModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = null;
+
+    ForMultiViewModel forMultiModel = TempData["ForMulti"] as ForMultiViewModel;
+
+
+    // design check present values
+    TempData["MaxForceFixedBrackets"] = forMultiModel.MaxForceFixedBrackets;
+    TempData["MaxForceSlidingBrackets"] = forMultiModel.MaxForceSlidingBrackets;
+    TempData["BendingMomentTProfile"] = forMultiModel.BendingMomentTProfile;
+
+    // design check guaranteed values
+    TempData["StrengthFixedBrackets"] = forMultiModel.StrengthFixedBrackets;
+    TempData["StrengthSlidingBrackets"] = forMultiModel.StrengthSlidingBrackets;
+    TempData["StrengthTProfile"] = forMultiModel.StrengthTProfile;
+}
+
+<div class="result-calculations-container">
+    <div class="result-calculations-tittle-container">
+        <h3 class="result-calculations-tittle">
+            @Model.ForMultiOnlyText
+        </h3>
+    </div>
+    <div class="result-calculations-table-container">
+        <table class="result-calculations-table border table-striped table-hover table-responsive">
+            <colgroup>
+                <col class="col-Item-Number col-5">
+                <col class="col-Quantity col-3">
+                <col class="col-Description col-3">
+            </colgroup>
+            <thead class="calculations-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th>
+                        @Model.ItemNameColText
+                    </th>
+                    <th>
+                        @Model.ItemUnitsOfMeasurementColText
+                    </th>
+                    <th>
+                        @Model.ItemNumberColText
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("maxHorizontalForceInFixedBracketText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @forMultiModel.MaxForceFixedBrackets
+                    </td>
+                </tr>
+            
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("strengthHorizontalForceInFixedBracketText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @forMultiModel.StrengthFixedBrackets
+                    </td>
+                </tr>
+            
+            <tr class="calculations-table-row border">
+                <td>
+                    @Model.Value("maxHorizontalForceInSlidingBracketText", fallback: Fallback.ToDefaultValue)
+                </td>
+                <td>
+                    @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                </td>
+                <td>
+                    @forMultiModel.MaxForceSlidingBrackets
+                </td>
+            </tr>
+            <tr class="calculations-table-row border">
+                <td>
+                    @Model.Value("strengthHorizontalForceInSlidingBracketText", fallback: Fallback.ToDefaultValue).ToString().Replace("{numberOfScrews}", forMultiModel.NumberOfScrews.ToString())
+                </td>
+                <td>
+                    @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                </td>
+                <td>
+                    @forMultiModel.StrengthSlidingBrackets
+                </td>
+            </tr>
+            <tr class="calculations-table-row border">
+                <td>
+                    @Model.Value("bendingMomentInTProfileText", fallback: Fallback.ToDefaultValue)
+                </td>
+                <td>
+                    @Model.Value("unit2", fallback: Fallback.ToDefaultValue)
+                </td>
+                <td>
+                    @forMultiModel.BendingMomentTProfile
+                </td>
+            </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("strengthBendingMomentInTProfileText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit2", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @forMultiModel.StrengthTProfile
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+    </div>
+</div>

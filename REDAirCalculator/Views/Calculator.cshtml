@@ -1,0 +1,165 @@
+﻿@using System.Configuration
+@using REDAirCalculator.Models.DTO
+@using REDAirCalculator.Utilities
+@using Umbraco.Forms.Core.Models
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = "Master.cshtml";
+
+    ViewBag.Title = Model.CalculatorPageTilte;
+
+    //for combinations
+    Form form = FormHelper.GetForm(new Guid(TempData["formGuid"].ToString()));
+    string anchorScrewDesign = FormHelper.GetFormFieldByName(form, "anchorScrewDesignPulOutStrength").Id.ToString();
+    string frictionCoefficient = FormHelper.GetFormFieldByName(form, "frictionCoefficientOfTheBackWall").Id.ToString();
+    string insulationThickness = FormHelper.GetFormFieldByName(form, "insulationThickness").Id.ToString();
+    string baseRailSpacing = FormHelper.GetFormFieldByName(form, "baseRailSpacingParameter").Id.ToString();
+    string ownLCWType = FormHelper.GetFormFieldByName(form, "ownValueAnchorType").Id.ToString();
+    string systemType = FormHelper.GetFormFieldByName(form, "system").Id.ToString();
+
+    string cityField = FormHelper.GetFormFieldByName(form, "city").Id.ToString();
+    string windSpeedAreaField;
+    try
+    {
+        windSpeedAreaField = FormHelper.GetFormFieldByName(form, "windSpeedArea").Id.ToString();
+    }
+    catch
+    {
+        windSpeedAreaField = "";
+    }
+
+    bool hasCalculationError = (bool)TempData["HasCalculationError"];
+    int projectsType = 0;
+    TempData["ProjectsType"] = projectsType;
+    bool isResulter = (bool)TempData["IsResulter"];
+
+    string insulationThicknessValue = string.Empty;
+    string frictionCoefficientValue = string.Empty;
+    string baseRailSpacingValue = string.Empty;
+    string windSpeedAreaValue = string.Empty;
+    string cityValue = string.Empty;
+    if (isResulter || hasCalculationError)
+    {
+        FormDataDto formData = TempData["FormData"] as FormDataDto;
+
+        insulationThicknessValue = formData.InsulationThickness;
+        frictionCoefficientValue = formData.FrictionCoef;
+        baseRailSpacingValue = formData.BaseRailSpacing;
+        windSpeedAreaValue = formData.WindSpeedArea;
+        cityValue = formData.City;
+    }
+
+    var windSpeedDict = (Dictionary<string, List<string>>)TempData["WindSpeedData"];
+    if (isResulter || hasCalculationError)
+    {
+        ViewBag.Title = Model.ResulterPageTilte;
+    }
+
+    string language = Model.GetCulture().Culture;
+
+    string windSpeedFieldId = string.Empty;
+    string windSpeedOtherValue = string.Empty;
+    if (language != "en")
+    {
+        Field windSpeed = FormHelper.GetFormFieldByName(form, "windSpeed");
+
+        windSpeedFieldId = windSpeed.Id.ToString();
+        windSpeedOtherValue = windSpeed.Condition.Rules.LastOrDefault()?.Value;
+    }
+}
+
+@section Navigation {
+    @Html.Partial("_Navigation")
+}
+
+<div class="calculator-wrapper">
+    @Umbraco.RenderMacro("renderUmbracoForm", new
+    {
+        FormGuid = TempData["FormGuid"],
+        FormTheme = TempData["Theme"],
+        ExcludeScripts = "0",
+        mode = "form"
+    })
+</div>
+
+@if (isResulter)
+{
+    @Html.Partial("_Resulter")
+}
+
+@section Scripts {
+
+    @if (isResulter || hasCalculationError)
+    {
+        <script>
+            window.projectsApiPath = '@ConfigurationManager.AppSettings["projectsApiPath"]';
+        </script>
+    }
+
+    <script>
+        window.hasCalculationError = "@hasCalculationError";
+        window.projectsType = "@projectsType.ToString()";
+    </script>
+
+    @Html.VersionedFile("/Scripts/calculator.js")
+
+    <script type='text/javascript'>
+        window.insulationThicknessId = "@insulationThickness";
+        window.anchorScrewId = "@anchorScrewDesign";
+        window.systemTypeId = "@systemType"
+        window.frictionCoefficientId = "@frictionCoefficient";
+        window.baseRailSpacingId = "@baseRailSpacing";
+        window.ownLCWTypeId = "@ownLCWType";
+
+        window.insulationThicknessValue ="@insulationThicknessValue";
+        window.frictionCoefficientValue = "@frictionCoefficientValue";
+        window.baseRailSpacingValue = "@baseRailSpacingValue";
+        window.windSpeedAreaValue = "@windSpeedAreaValue";
+        window.cityValue = "@cityValue";
+
+        window.windSpeedOtherValue = "@windSpeedOtherValue";
+
+        window.cityFieldId = "@cityField";
+        window.windSpeedAreaFieldId = "@windSpeedAreaField";
+        window.windSpeedFieldId = "@windSpeedFieldId";
+
+        window.jsAnchorScrewList =  @JavaScriptConvert.SerializeObject(TempData["anchorScrewList"]);
+        window.anchorFrictionCombinations =  @JavaScriptConvert.SerializeObject(TempData["anchorFrictionCombinations"]);
+        window.lcwThicknessCombinations = @JavaScriptConvert.SerializeObject(TempData["lcwThicknessCombinations"]);
+        window.BaseRailCombinationList = @JavaScriptConvert.SerializeObject(TempData["baseRailSpacingList"]);
+        window.AreaCityDictionary = {};
+        @foreach(KeyValuePair<string, List<string>> entry in windSpeedDict)
+        {
+        <text>
+            var cityArr =  @JavaScriptConvert.SerializeObject(entry.Value);
+            window.AreaCityDictionary["@entry.Key"] = cityArr;
+        </text>
+        }
+    </script>
+
+    @Html.VersionedFile("/Scripts/form-combinations.js")
+
+    <script>
+        $(document).ready(function () {
+            formCombinations.onChangeAnchorScrew(true);
+            formCombinations.onChangeAnchorType(true);
+            formCombinations.onChangeInsulation(true);
+        });
+    </script>
+
+    @if (isResulter)
+    {
+        @Html.VersionedFile("/Scripts/resulter.js")
+    }
+
+    @if (hasCalculationError)
+    {
+        <script>
+            $(document).ready(function () {
+                header.messages.addNotification("calc-error:calc-error:5000000");
+            });
+        </script>
+    }
+}

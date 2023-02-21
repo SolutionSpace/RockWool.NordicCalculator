@@ -1,0 +1,145 @@
+﻿@using System.Configuration
+@using REDAirCalculator.Models.DTO
+@using PagedList
+@using REDAirCalculator.Utilities
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<Projects>
+
+@{
+    Layout = "Master.cshtml";
+    ViewBag.Title = Model.Title;
+
+    string projectsApiPath = ConfigurationManager.AppSettings["projectsApiPath"];
+
+    IPublishedContent root = UmbracoContext.ContentCache.GetAtRoot().First();
+
+    Home rootPage = (Home)root;
+
+    IPagedList<ProjectDto> projects = TempData["pageData"] as IPagedList<ProjectDto>;
+
+    bool isProjectDeleted = false;
+    var projectDeletedObject = TempData["Project_Delete_Success"];
+    if (projectDeletedObject != null)
+    {
+        isProjectDeleted = (bool)projectDeletedObject;
+    }
+
+    int projectsType = (int)TempData["projectsType"];
+    string projectsTypeValue = projectsType == 1 ? "Link" : "Flex/Multi";
+
+}
+
+<div class="projects-container">
+    <div class="projects-bar-container">
+        <div class="projects-title-container">
+            <h4 class="projects-title">
+                @Model.Title
+            </h4>
+        </div>
+
+        <div class="projects-button-container">
+            <div class="projects-item-container">
+                <select class="projects-types-selector">
+                    <option data-value="@Model.Url">Flex/Multi</option>
+                    <option data-value="@Model.Url?t=1">Link</option>
+                </select>
+            </div>
+            <div class="projects-item-container">
+                <button class="projects-button btn btn-dark"
+                        onclick="location.href = '@rootPage.Url()'">
+                    <img class="projects-button-icon" src="~/Content/images/add.svg" />
+                    @Model.NewProjectText
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (projects.Any())
+    {
+        <div class="projects-table-container">
+            <table class="projects-table border table-striped table-hover">
+                <colgroup>
+                    <col class="col-Project col-4">
+                    <col class="col-Creation-Date col-2">
+                    <col class="col-Last-Updated col-3">
+                    <col class="col-Actions col-2">
+                </colgroup>
+                <thead class="projects-table-header border-bottom">
+                    <tr class="border">
+                        <th>@Model.ProjectNameColText</th>
+                        <th>@Model.ProjectCreationDateColText</th>
+                        <th>@Model.ProjectUpdateDateColText</th>
+                        <th>@Model.ProjectActionsColText</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ProjectDto project in projects)
+                    {
+                        string projectGetLink = $"{projectsApiPath}/get/?entryGuid={project.Guid}&t={projectsType}";
+                        <tr class="projects-table-row border">
+                            <td onclick="location.href = '@projectGetLink'">
+                                @project.Name
+                            </td>
+                            <td onclick="location.href = '@projectGetLink'">
+                                @project.Created
+                            </td>
+                            <td onclick="location.href = '@projectGetLink'">
+                                @project.Updated
+                            </td>
+                            <td class="projects-table-btn-td">
+                                <button class="btn btn-sm delete-btn"
+                                        data-toggle="modal"
+                                        data-target="#@project.Guid">
+                                    <img class="projects-button-icon"
+                                         src="~/Content/images/projects-bin.png"
+                                         alt="delete icon"
+                                         title="delete" />
+                                </button>
+                                <button class="btn btn-sm open-btn"
+                                        onclick="location.href = '@projectGetLink'">
+                                    <img class="projects-button-icon"
+                                         src="~/Content/images/projects-folder.png"
+                                         alt="edit icon"
+                                         title="edit" />
+                                </button>
+                            </td>
+
+                        </tr>
+
+                        <!-- Delete pop up -->
+                        @Html.Partial("_DeletePopUp", project)
+                    }
+                </tbody>
+
+
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-light no-projects" role="alert">
+            @Model.NoProjectsText
+        </div>
+    }
+</div>
+
+@Html.Partial("_ProjectsPagination")
+
+@section Scripts {
+
+    <script>
+        window.projectsTypeValue = "@projectsTypeValue";
+    </script>
+
+    @Html.VersionedFile("/Scripts/projects.js")
+
+    @if (isProjectDeleted)
+    {
+        <script>
+            $(document).ready(() => {
+                header.messages.addNotification("success:delete:5000");
+            });
+        </script>
+    }
+}

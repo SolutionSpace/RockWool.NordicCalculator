@@ -1,0 +1,156 @@
+﻿@using REDAirCalculator.Models.ResultViewModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = null;
+
+    LoadCalculationsViewModel loadCalculationsModel = TempData["LoadCalculations"] as LoadCalculationsViewModel;
+
+    string oldValue = "2";
+    string newValue = "<sup>" + oldValue + "</sup>";
+
+    // design check present values
+    TempData["TotalMaxForce"] = loadCalculationsModel.TotalMaxForce;
+    TempData["NecessaryPrestress"] = @loadCalculationsModel.NecessaryPrestress;
+
+    // design check guaranteed values
+    TempData["AnchorScrewPull"] = loadCalculationsModel.AnchorScrewPull;
+    TempData["MinPrestressForce"] = loadCalculationsModel.MinPrestressForce;
+    bool isMulti = (bool)TempData["IsMulti"];
+    bool showAll = (bool) TempData["ShowAllResults"];
+}
+
+<div class="result-calculations-container">
+    <div class="result-calculations-tittle-container">
+        <h3 class="result-calculations-tittle">
+            @Model.LoadCalculationsText
+        </h3>
+    </div>
+    <div class="result-calculations-table-container">
+        <table class="result-calculations-table border table-striped table-hover table-responsive">
+            <colgroup>
+                <col class="col-Item-Number col-5">
+                <col class="col-Quantity col-3">
+                <col class="col-Description col-3">
+            </colgroup>
+            <thead class="calculations-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th>
+                        @Model.ItemNameColText
+                    </th>
+                    <th>
+                        @Model.ItemUnitsOfMeasurementColText
+                    </th>
+                    <th>
+                        @Model.ItemNumberColText
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("totalSelfweightOfFacadeText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Html.Raw(Model.Value("unit5", fallback: Fallback.ToDefaultValue).ToString().Replace(oldValue, newValue))
+                    </td>
+                    <td>
+                        @loadCalculationsModel.TotalSelfweight
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("maxForceInAnchorScrewFromWindText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @loadCalculationsModel.MaxForceWind
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("maxForceInAnchorScrewFromPrestressText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>@loadCalculationsModel.MaxForcePrestress</td>
+                </tr>
+                @if (isMulti && showAll)
+                {
+
+                    <tr class="calculations-table-row border">
+                        <td>
+                            @Model.Value("maxForceInAnchorScrewFromSelfweightText", fallback: Fallback.ToDefaultValue)
+                        </td>
+                        <td>
+                            @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                        </td>
+                        <td>
+                            @loadCalculationsModel.MaxForceSelfweight
+                        </td>
+                    </tr>
+                }
+
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("totalMaxForceInAnchorScrewText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @loadCalculationsModel.TotalMaxForce
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("anchorScrewPullOutStrengthText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit1", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @loadCalculationsModel.AnchorScrewPull
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("necessaryPrestressText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit4", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @loadCalculationsModel.NecessaryPrestress
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("minPrestressForcePrMBaseRailText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Model.Value("unit4", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @loadCalculationsModel.MinPrestressForce
+                    </td>
+                </tr>
+                <tr class="calculations-table-row border">
+                    <td>
+                        @Model.Value("windPeakVelocityPressureText", fallback: Fallback.ToDefaultValue)
+                    </td>
+                    <td>
+                        @Html.Raw(Model.Value("unit3", fallback: Fallback.ToDefaultValue).ToString().Replace(oldValue, newValue))
+                    </td>
+                    <td>
+                        @loadCalculationsModel.WindPeakVelocity
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

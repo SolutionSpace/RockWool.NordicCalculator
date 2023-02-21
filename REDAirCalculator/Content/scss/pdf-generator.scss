@@ -1,0 +1,45 @@
+.print-pages {
+    width: 794px;
+    /*position: absolute;
+    top: -10000px;*/
+    margin-top: 50px;
+
+    .print-wrap {
+        width: 100%;
+        /*td, th {
+            padding: 5px 10px !important;
+        }*/
+        .page-header {
+            margin-bottom: 10px
+        }
+
+        .pdf-form-table {
+            margin-bottom: 10px;
+
+            td {
+                text-align: left !important;
+            }
+        }
+
+        .input-form-table {
+            margin-top: 10px
+        }
+
+        .result-container {
+            width: 100% !important
+        }
+
+        .result-description-container {
+            margin: 20px 0px 20px 0px !important;
+        }
+
+        .result-tittle {
+            display: none;
+        }
+
+        .result-table-row, .calculations-table-row,
+        .result-calculations-tittle, .result-description-text-container {
+            color: #000000
+        }
+    }
+}

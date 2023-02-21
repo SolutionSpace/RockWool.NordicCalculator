@@ -1,0 +1,260 @@
+@import "variables.scss";
+@import "mixins/calculator";
+
+@media (max-width: $smDevicesWidth) {
+    .wrapper {
+        padding: 0 1rem !important;
+    }
+
+    .large-tooltip-content {
+        overflow-x: scroll !important;
+    }
+
+    .projects-container {
+        table {
+            td {
+                padding: 0.40625rem 0.5rem !important;
+            }
+
+            td:nth-child(1), th:nth-child(1) {
+                width: 50%;
+            }
+
+            td:nth-child(2), th:nth-child(2) {
+                width: 50%;
+            }
+
+            td:nth-child(3), th:nth-child(3) {
+                display: none !important;
+            }
+
+
+            th:nth-child(4) {
+                width: 20%;
+                margin-left: 30%;
+            }
+
+            td:nth-child(4) {
+                display: flex;
+                display: -moz-box;
+                justify-content: flex-end !important;
+                margin-left: 50%;
+            }
+
+            .open-btn {
+                display: none !important;
+            }
+        }
+    }
+
+    .form-checkbox {
+        .checkbox-decorator {
+            padding: 0 !important;
+        }
+    }
+
+    .field-validation-error{
+        padding: 0 0 0 10px;
+    }
+
+    .calculator-wrapper {
+
+        .left-side {
+            width: 100%;
+            float: none;
+        }
+
+        .right-side {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    .result-calculations-table {
+        .col-OpeningTypes-Name {
+            width: 10%;            
+        }
+
+        .col-OpeningTypes-Standart {
+            width: 3%;
+        }
+
+        .col-OpeningTypes-Information {
+            width: 70% !important;
+        }
+    }
+}
+
+@media (max-width: $mdDevicesWidth) {
+
+    .calculator-wrapper {
+
+        .left-side {
+            width: auto;
+            float: none;
+        }
+
+        .right-side {
+            width: auto;
+            float: none;
+        }
+    }
+
+    .project-form {
+        .large-tooltip-content {
+            overflow-x: scroll !important;
+        }
+
+        .project-btn-container {
+            display: block;
+
+            .buttons {
+                margin-top: 0.7rem;
+                width: 100%;
+            }
+        }
+    }
+    .form-checkbox {
+        .checkbox-decorator {
+            padding: 0 !important;
+        }
+    }
+    .notification-wrapper {
+        .alert {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: $lgDevicesWidth) {
+
+    .calculator-wrapper {
+
+        .left-side {
+            width: auto;
+            float: none;
+        }
+
+        .right-side {
+            width: auto;
+            float: none;
+        }
+    }
+
+    .notification-wrapper {
+        .alert {
+            width: 100%;
+        }
+    }
+
+    .wrapper {
+        width: 100% !important;
+    }
+
+    .nav-language {
+        margin-left: 0 !important;
+
+        .dropdown-toggle {
+            width: auto;
+        }
+
+        img {
+            vertical-align: top;
+            padding-top: 10px;
+        }
+    }
+
+    .calculator-wrapper {
+        fieldset {
+            padding-right: 0
+        }
+
+        .calculator-form-line {
+            .calculator-selector-wrapper, .calculator-field-wrapper{
+                min-height: 39px
+            }
+
+            label.active {
+                padding-bottom: 1px;
+            }
+        }
+
+        .radiobutton-list {
+            justify-content: flex-start !important;
+        }
+
+        .dropdown-menu {
+            width: 100%
+        }
+
+        .filter-option {
+            text-align: left !important
+        }
+
+        input[type='text'].text-right {
+            text-align: left !important
+        }
+
+        textarea {
+            padding-left: 10px !important;
+            text-align: left !important;
+        }
+
+        .calculator-field-label {
+            border-bottom: none !important
+        }
+
+        label, .dropdown-toggle, input[type='text'].text-right {
+            padding-left: 10px !important;
+        }
+
+        .button-wrapper {
+            padding: 0 1rem
+        }
+    }
+
+    .header-container {
+        padding-bottom: 0.5rem;
+
+        .logout-button {
+            padding-left: 5px;
+            padding-top: 0 !important;
+            padding-bottom: 2px !important;
+        }
+    }
+
+    .pagination-container {
+
+        a {
+            padding: 6px 12px !important;
+        }
+    }
+}
+
+@media (max-width: $xlDevicesWidth) {
+
+    .calculator-wrapper {
+
+        .left-side {
+            width: auto;
+            float: none;
+        }
+
+        .right-side {
+            width: auto;
+            float: none;
+        }
+    }
+
+    .notification-wrapper {
+        .alert {
+            width: 100%;
+        }
+    }
+    
+
+    .wrapper {
+        padding: 0 2rem;
+        width: 75%;
+    }
+}

@@ -1,0 +1,81 @@
+@import "variables.scss";
+
+
+.agree-checkbox {
+    font-size: 16px;
+    color: #333333;
+    margin-top: 40px;
+    text-align: center;
+    cursor: default;
+
+    p {
+        display: inline-block
+    }
+
+    .agree-link {
+        color: $mainColor;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .agree-text {
+        margin-left: 5px;
+        color: #212529;
+    }
+
+    .checkbox-decorator {
+        position: relative !important;
+    }
+
+    .check {
+        top: 0.15em;
+    }
+
+    input[type=checkbox]:checked + .checkbox-decorator {
+
+        .check {
+            border-color: $mainColor !important;
+        }
+
+        .check:before {
+            color: $mainColor !important;
+        }
+    }
+}
+
+
+.remember-me-checkbox {
+    font-size: 16px;
+    color: #333333;
+    margin-top: 0px;
+    text-align: center;
+
+    p {
+        display: inline-block
+    }
+
+    .agree-link {
+        color: $mainColor;
+        text-decoration: underline
+    }
+
+    .agree-text {
+        margin-left: 5px
+    }
+
+    .checkbox-decorator {
+        position: relative !important;
+    }
+
+    input[type=checkbox]:checked + .checkbox-decorator {
+
+        .check {
+            border-color: $mainColor !important;
+        }
+
+        .check:before {
+            color: $mainColor !important;
+        }
+    }
+}
+

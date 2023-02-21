@@ -1,0 +1,30 @@
+﻿@using Umbraco.Web
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    string logOutButtonText = Umbraco.GetDictionaryValue("Logout button text");
+
+    Home rootPage = (Home)UmbracoContext.ContentCache.GetAtRoot().First();
+}
+
+@if (Umbraco.MemberIsLoggedOn())
+{
+    using (Html.BeginUmbracoForm("SubmitLogout", "Members", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
+    {
+        @Html.AntiForgeryToken()
+
+        var myUser = Membership.GetUser();
+        if (myUser != null)
+        {
+            <button name="login" style="background-color: transparent; border-color: transparent;"
+                    type="submit"
+                    class="submit-btn nav-link logout-button"
+                    id="log-out"
+                    href="@rootPage.Url()">
+                @Members.GetCurrentMember().Name / @logOutButtonText
+            </button>
+        }
+    }
+}
+

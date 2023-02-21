@@ -1,0 +1,32 @@
+﻿[
+    {
+        "outputFile": "Content/css/bootstrap-material-design.css",
+        "inputFile": "node_modules/bootstrap-material-design/scss/bootstrap-material-design.scss",
+        "minify": {
+            "enabled": false
+        },
+        "options": {
+            "sourceMap": true
+        }
+    },
+    {
+        "outputFile": "Content/css/bootstrap-select.css",
+        "inputFile": "node_modules/bootstrap-select/sass/bootstrap-select.scss",
+        "minify": {
+            "enabled": false
+        },
+        "options": {
+            "sourceMap": true
+        }
+    },
+    {
+        "outputFile": "Content/css/main.css",
+        "inputFile": "Content/scss/main.scss",
+        "minify": {
+            "enabled": false
+        },
+        "options": {
+            "sourceMap": true
+        }
+    }
+]

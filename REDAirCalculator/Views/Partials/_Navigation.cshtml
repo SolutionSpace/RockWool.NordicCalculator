@@ -1,0 +1,69 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Layout = null;
+
+    string backText = Umbraco.GetDictionaryValue("Back text");
+
+    Home rootPage = (Home)UmbracoContext.ContentCache.GetAtRoot().First();
+
+    bool isResulter = (bool)TempData["IsResulter"];
+
+    MembershipUser user = Membership.GetUser();
+
+    string pdfLink = string.Empty;
+    string pdfName = string.Empty;
+    if (isResulter)
+    {
+        pdfLink = TempData["PdfLink"].ToString();
+        pdfName = TempData["PdfName"].ToString();
+    }
+
+}
+
+<div class="nav-wrapper">
+    <div class="jumbotron calculator-navigation">
+        <div class="row">
+            <div class="col-3 arrow-back-container" onclick="location.href = '@rootPage.Url()'">
+                <img class="arrow-img"
+                     src="~/Content/images/arrow_back.svg" />
+                <div class="project-info">
+                    <p class="lead date">@DateTime.Now.ToString("dd.MM.yyyy")</p>
+                    <h3 class="display-4 name">@backText</h3>
+                </div>
+            </div>
+            @if (isResulter)
+            {
+                <div class="col-6 text-center icons-col">
+                    @if (user == null)
+                    {
+                        <div class="btn btn-sm disabled project-save-button"
+                             data-toggle="modal"
+                             data-target="#loginModal">
+                             <a href="/umbraco/surface/auth0/authenticate?forceAuth0=true&formGuId=@TempData["FormGuid"]&entryGuId=@TempData["Forms_Current_Record_id"]&projectsType=@TempData["ProjectsType"]">
+                                <img src="~/Content/images/save.svg" />
+                             </a>
+                        </div>
+                    }
+                    <a href="@pdfLink"
+                       download="@pdfName"
+                       class="btn btn-sm disabled navigation-print-button">
+                        <img src="~/Content/images/print.svg" />
+                    </a>
+                    @if (user != null)
+                    {
+                        <div class="btn btn-sm disabled email-pop-up-btn"
+                             data-toggle="modal"
+                             data-target="#emailProjectModal">
+                            <img src="~/Content/images/mail.svg" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+        <hr class="my-4">
+    </div>
+</div>
+
+<!-- E-mail project pop up -->
+@Html.Partial("_EmailPopUp", new REDAirCalculator.Models.RegistrationModels.Email())

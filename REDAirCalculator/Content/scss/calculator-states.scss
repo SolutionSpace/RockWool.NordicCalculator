@@ -1,0 +1,21 @@
+@import "mixins/common";
+
+.wrapper.desktop-resulter-wrapper {
+    @include flex-wrap;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .calculator-wrapper {
+        width: 45%;
+        padding: 0 5%;
+    }
+
+    .result-container {
+        display: block;
+        width: 50%;
+    }
+
+    .opening-types-container {
+        width: 100% !important
+    }
+}

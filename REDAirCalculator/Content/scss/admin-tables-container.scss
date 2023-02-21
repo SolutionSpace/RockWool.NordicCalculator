@@ -1,0 +1,119 @@
+﻿@import "common.scss";
+
+.table-wrapper {
+    width: 80%;
+    color: red;
+
+    .admin-table-container {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 3rem;
+
+        @media only screen and (max-width: 990px) {
+            display: block;
+        }
+
+        .admin-form {
+            max-width: 100%;
+            min-width: 30%;
+            padding-right: 15px;
+
+            form {
+                .text-field {
+                    label {
+                        padding-left: 15px;
+                    }
+
+                    input {
+                        text-align: center;
+                    }
+                }
+
+                .dropdown-field {
+                    display: flex;
+                    justify-content: flex-start;
+
+
+                    .bmd-form-group {
+                        padding-top: 0;
+                        min-width: 100%;
+                        max-height: 80%;
+
+
+
+                        .custom-select {
+                            border: 0;
+                            margin-bottom: 5px;
+                            box-shadow: 0 0 0 0;
+                        }
+
+                        .calculator-selector {
+                            .filter-option-inner-inner {
+                                color: #495057;
+                                text-align: center;
+                            }
+
+                            .dropdown-toggle::after {
+                                border-top-color: #495057;
+                            }
+                        }
+                    }
+                }
+
+                
+
+                .btn-calculator {
+                    margin: 20px 15px 0px 0px;
+                    background-color: $mainColor;
+                    color: white;
+                    padding: 10px 15px;
+                }
+            }
+        }
+
+        .admin-table {
+            overflow-x: scroll;
+            overflow-y: scroll;
+            padding-left: 15px;
+            max-width: 100%;
+            min-width: 70%;
+            height: 700px;
+
+            @media only screen and (max-width: 990px) {
+                height: 100%;
+                overflow-y: hidden;
+            }
+
+            @media only screen and (max-width:1400px) and (min-width: 990px) {
+                height: 500px;
+            }
+
+
+            table {
+                .admin-table-header {
+                    font-size: 12px;
+                }
+
+                .admin-table-row {
+                    td {
+                        text-align: center;
+                        font-size: 14px;
+                    }
+
+                    .true-boolean {
+                        background-color: rgba(6, 143, 34, 0.09)
+                    }
+
+                    .false-boolean {
+                        background-color: rgba(167, 13, 13, 0.09)
+                    }
+
+                    td, th {
+                        padding: 3px 3px;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

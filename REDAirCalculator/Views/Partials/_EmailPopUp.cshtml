@@ -1,0 +1,132 @@
+﻿@using REDAirCalculator.Models.DTO
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<REDAirCalculator.Models.RegistrationModels.Email>
+
+@{
+    string popupCancelText = Umbraco.GetDictionaryValue("Popup cancel text");
+
+    string emailPopupTitleText = Umbraco.GetDictionaryValue("Email popup title text");
+    string emailPopupAddressText = Umbraco.GetDictionaryValue("Email popup address text");
+    string emailPopupOkText = Umbraco.GetDictionaryValue("Email popup ok text");
+    string sendProjectToSalesSupport = Umbraco.GetDictionaryValue("Send project to our sales support");
+    string emailPopupSalesSupportEmail = Umbraco.GetDictionaryValue("Email popup sales support email");
+    string emailIsRequired = Umbraco.GetDictionaryValue("The Email field is required");
+    string emailNotValid = Umbraco.GetDictionaryValue("Email is not valid");
+
+    var currentEntryObjectGuid = TempData["Forms_Current_Record_id"];
+
+    bool isResulter = (bool)TempData["IsResulter"];
+    bool isLinkSystem = (bool)TempData["IsLinkSystem"];
+
+    string projectName = string.Empty;
+    string company = string.Empty;
+
+    if (isResulter)
+    {
+        dynamic formData;
+        if (isLinkSystem)
+        {
+            formData = TempData["FormData"] as LinkFormDataDto;
+        }
+        else
+        {
+            formData = TempData["FormData"] as FormDataDto;
+        }
+
+        IPublishedContent member = Members.GetCurrentMember();
+
+        projectName = formData.ProjectName;
+
+        if (member != null)
+        {
+            company = member.GetProperty("company").GetValue().ToString();
+        }
+    }
+}
+
+
+<div class="modal fade" id="emailProjectModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                @using (Ajax.BeginForm(
+                    "Send",
+                    "Project",
+                    new { emailUser = new EmailSender() },
+                    new AjaxOptions
+                    {
+                        OnSuccess = "onSuccess",
+                        OnFailure = "onFail",
+                        OnBegin = "onBegin"
+                    },
+                    new { @class = "project-form" }))
+                {
+
+                    <button type="button" class="project-close-btn close btn btn-lg disabled" data-dismiss="modal" aria-label="Close">
+                        ✕
+                    </button>
+
+                    <h3 class="modal-title project-title" id="emailProjectTitle">@emailPopupTitleText</h3>
+
+                    <input id="FormGuId" name="FormGuId" value="@currentEntryObjectGuid" hidden />
+                    <input id="ProjectName" name="ProjectName" value="@projectName" hidden />
+
+                    <div class="form-group project-input-container">
+                        <label for="EmailAddress" class="bmd-label-floating">@emailPopupAddressText</label>
+                        <input required class="form-control" id="EmailAddress" name="EmailAddress" data-val="true" data-val-required="@emailIsRequired"
+                               data-val-regex="@emailNotValid" type="email" value=""
+                               data-val-regex-pattern="[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?">
+                        <span class="field-validation-valid bmd-help" data-valmsg-for="EmailAddress" data-valmsg-replace="true">
+                            <span id="EmailAddress-error" class="">@emailNotValid</span>
+                        </span>
+                    </div>
+
+                    <div class="form-group project-input-container">
+                        <label for="Company" class="bmd-label-floating">Company</label>
+                        <input required class="form-control" id="Company" name="Company" data-val="true" data-val-required="Company field is required"
+                               @if (company != null && company != "") { <text> value="@company" readonly </text> } else { <text>value=""</text> } />
+                    </div>
+
+                    <div class="project-btn-container">
+                        <div class="checkbox remember-me-checkbox" @if (emailPopupSalesSupportEmail == "") { <text> style="visibility:hidden" </text> }>
+                            <label>
+                                <input type="checkbox" id="email-support"> @sendProjectToSalesSupport
+                            </label>
+                        </div>
+
+                        <div class="buttons">
+                            <input type="submit"
+                                   class="btn btn-primary project-submit-btn project-email-btn"
+                                   value="@emailPopupOkText" />
+                            <button data-dismiss="modal" class="btn btn-secondary project-cancel-btn">@popupCancelText</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var onBegin = function () {
+        $('#emailProjectModal').modal( 'hide' );
+    }
+
+    var onSuccess = function () {
+        header.messages.addNotification("success:email:5000");
+    }
+
+    var onFail = function () {
+        header.messages.addNotification("error:error:5000");
+    }
+
+    $(".remember-me-checkbox").on("click", function() {
+        if ($("#email-support").prop("checked")) {
+            $("#EmailAddress").val("@emailPopupSalesSupportEmail");
+            $("#EmailAddress").attr("readonly", "disabled");
+        } else {
+            $("#EmailAddress").val("");
+            $("#EmailAddress").prop("readonly", false);
+        }
+    });
+</script>

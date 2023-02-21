@@ -1,0 +1,284 @@
+@import "variables.scss";
+@import "mixins/common";
+@import "mixins/calculator";
+@import "agree-checkbox.scss";
+
+.calculator-wrapper {
+    margin-top: 25px;
+
+    .half-side {
+        width: 50%;
+        float: left;
+    }
+
+
+    .large-tooltip-content {
+        overflow-y: auto;
+        overflow-x: auto;
+        width: 100%;
+        height: auto;
+        border: 1px solid black;
+
+        p {
+            margin: 0 !important;
+        }
+
+        table {
+            width: 100% !important;
+
+            td {
+                vertical-align: top !important;
+                line-height: 2;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    }
+
+    .read-more {
+        color: $mainColor !important;
+    }
+
+    .calculator-wrapper {
+        margin: 0 5px;
+    }
+
+    .umbraco-forms, .missing-library {
+        display: none;
+    }
+
+    .calculator-caption {
+        font-size: 30px;
+        margin-bottom: 40px;
+    }
+
+    .form-indicator {
+        img {
+            margin-left: 5px;
+        }
+    }
+
+    .umbraco-forms-fieldset {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        background-image: none;
+        padding-right: 10px;
+        padding-top: 0;
+        padding-bottom: 1px;
+        @include border-bottom;
+        height: 100%;
+        color: black;
+    }
+
+    .left-side {
+        width: 50%;
+        float: left;
+    }
+
+    .right-side {
+        width: 50%;
+        float: right;
+    }
+
+    .form-control:disabled {
+        background-color: transparent !important;
+        color: rgba(0, 0, 0, 0.26);
+    }
+
+    .form-control:focus {
+        padding-bottom: 0px;
+        @include border-bottom-active;
+    }
+
+    .col-2, .col-10, .col-12 {
+        @include no-padding;
+    }
+
+    label.calculator-field-label, .radiobutton-list label {
+        font-size: 14px;
+        margin-bottom: 0;
+        line-height: 37px;
+        color: #212529 !important;
+        @include border-bottom;
+    }
+
+    .label-mandatory:after {
+        content: "*";
+        font-size: 20px;
+        color: red;
+    }
+
+    .radiobutton-list label {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .umbraco-forms-field {
+        padding-top: 5px;
+    }
+
+    .btn {
+        text-transform: none !important;
+    }
+
+    .radiobutton-list {
+        width: 100%;
+        display: inline-flex;
+        justify-content: flex-end;
+        @include border-bottom;
+
+        input, label {
+            margin-left: 5px;
+            border-bottom: 0px;
+            align-self: center;
+        }
+
+        label {
+            padding-top: 4px;
+        }
+    }
+
+    .calculator-field-wrapper {
+        border-bottom: none;
+    }
+
+    .calculator-field-wrapper.active {
+        span {
+            .form-control {
+                border-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+    }
+
+    .calculator-selector-wrapper {
+        @include border-bottom;
+    }
+
+
+    label, .radiobutton-list {
+        padding-bottom: 1px;
+    }
+
+    label.active, .calculator-field-wrapper.active, .form-control.active, .radiobutton-list.active {
+        padding-bottom: 0px;
+        @include border-bottom-active;
+    }
+
+    .calculator-field-wrapper.active {
+        .dropdown-toggle {
+            border-bottom: none;
+        }
+    }
+
+    .bootstrap-select > .btn.btn-light.dropdown-toggle:focus {
+        color: #060606;
+    }
+
+    .dropdown-toggle[aria-expanded="false"] {
+        @include border-bottom;
+    }
+
+    .bootstrap-select > .dropdown-toggle, input, textarea {
+        font-weight: bold;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        color: #060606;
+        padding-right: 0;
+        margin-bottom: 0;
+        border-radius: 0;
+        border-bottom: none;
+
+        .filter-option {
+            text-align: right;
+            margin-right: 5px;
+        }
+    }
+
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 100%
+    }
+
+    .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+        top: 14px;
+        left: 20px;
+    }
+
+    .bootstrap-select {
+
+        .bs-ok-default:after {
+            border-color: $mainColor;
+        }
+
+        .dropdown-menu {
+            padding: 0;
+            min-width: 120px;
+
+            .dropdown-item {
+                font-size: 14px;
+                padding-left: 2.5rem;
+                min-height: 100%;
+                max-width: 100%;
+
+                .text {
+                    font-weight: bold;
+                    color: #060606;
+                }
+            }
+        }
+    }
+
+
+
+    .btn-tooltip-group {
+        display: flex;
+        justify-content: flex-end;
+
+        .tool-tip {
+            display: inline-block;
+        }
+
+        .tool-tip [disabled] {
+            pointer-events: none;
+        }
+
+        .btn-calculator {
+            margin: 20px 15px 0px 0px;
+            background-color: $mainColor;
+            color: white;
+            padding: 10px 15px;
+        }
+    }
+
+    .btn-calculator:disabled:hover {
+        background-color: $mainColor;
+    }
+
+    .form-checkbox {
+        font-size: 16px;
+        color: #333333;
+        text-align: end;
+        padding: 0 10px 0 0;
+        @include border-bottom;
+        height: 100%;
+
+        input[type=checkbox]:checked + .checkbox-decorator {
+
+            .check {
+                border-color: $mainColor !important;
+            }
+
+            .check:before {
+                color: $mainColor !important;
+            }
+        }
+    }
+
+
+    .form-checkbox.active {
+        @include border-bottom-active;
+    }
+}

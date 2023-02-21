@@ -1,0 +1,6 @@
+@model Umbraco.Forms.Mvc.Models.FieldViewModel
+<input type="text" name="@Model.Name" id="@Model.Id" class="text form-control @if (Model.ShowIndicator) {<text>text-left</text> } else {<text>text-right</text> }" value="@Model.ValueAsHtmlString" maxlength="250"
+       @{if (string.IsNullOrEmpty(Model.PlaceholderText) == false) { <text> placeholder="@Model.PlaceholderText" </text> }}
+       @{if (Model.Mandatory || Model.Validate) { <text> data-val="true" </text> }}
+       @{if (Model.Mandatory) { <text> data-val-required="@Model.RequiredErrorMessage" </text> }}
+       @{if (Model.Validate) { <text> data-val-regex="@Model.InvalidErrorMessage" data-regex="@Html.Raw(Model.Regex)" </text> }} />

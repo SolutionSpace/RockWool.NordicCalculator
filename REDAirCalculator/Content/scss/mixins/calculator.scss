@@ -1,0 +1,9 @@
+@import "../variables";
+
+@mixin border-bottom {
+    border-bottom: 1px solid #C8C6C6;
+}
+
+@mixin border-bottom-active {
+    border-bottom: 2px solid $mainColor;
+}

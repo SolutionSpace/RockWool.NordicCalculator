@@ -1,0 +1,155 @@
+﻿@using REDAirCalculator.Models.DTO
+@using System.Windows;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<LinkCalculator>
+
+@{
+    Layout = null;
+    List<OpeningTypeDto> openingTypes = TempData["LinkInstallationInstractions"] as List<OpeningTypeDto>;
+    var isMobile = Request.Browser.IsMobileDevice;
+    string translateType = Umbraco.GetDictionaryValue("Type");
+}
+
+<div class="result-calculations-container">
+    <div class="result-calculations-tittle-container">
+        <h3 class="result-calculations-tittle">
+            @Model.HeadingInstallation
+        </h3>
+    </div>
+    <div class="result-calculations-table-container">
+        <table class="result-calculations-table installation-instruction-table border table-striped table-hover ">
+            <colgroup>
+                <col class="col-OpeningTypes-Name ">
+                <col class="col-OpeningTypes-Standart ">
+                <col class="col-OpeningTypes-Standart ">
+                <col class="col-OpeningTypes-Standart ">
+                <col class="col-OpeningTypes-Standart ">
+                <col class="col-OpeningTypes-Information ">
+                @if (!isMobile)
+                {
+                    <col class="col-OpeningTypes-Information ">
+                }
+
+            </colgroup>
+            <thead class="calculations-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th> @Model.HeadingOpeningType</th>
+                    <th> @Model.HeadingWindowDoor </th>
+                    <th> @Model.HeadingWidth </th>
+                    <th> @Model.HeadingHeight </th>
+                    <th> @Model.HeadingAmount </th>
+                    @if (!isMobile)
+                    {
+                        <th> @Model.HeadingBrackets </th>
+                    }
+                    <th> @Model.HeadingInformation </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < openingTypes.Count; i++)
+                {
+                    <tr class="calculations-table-row border">
+                        <td> @openingTypes[i].Type @translateType @(i + 1) </td>
+                        <td> @openingTypes[i].Type </td>
+                        <td> @openingTypes[i].Width </td>
+                        <td> @openingTypes[i].Height </td>
+                        <td> @openingTypes[i].Amount </td>
+                        @if (!isMobile)
+                        {
+                            <td>
+                                <div> @Model.AngleBrackets: @openingTypes[i].PerItemAngleBrackets </div>
+                                <div> @Model.JoinerBrackets: @openingTypes[i].PerItemJoiner  </div>
+                                <div> @Model.CornerBrackets: @openingTypes[i].PerItemCorner </div>
+                            </td>
+
+                            <td>
+                                <div> @Model.BoardLbm: @openingTypes[i].PerItemLBM </div>
+                                <div> @Model.SelfWeight: @openingTypes[i].SelfWeight (kg) </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div> @Model.AngleBrackets: @openingTypes[i].PerItemAngleBrackets </div>
+                                <div> @Model.JoinerBrackets: @openingTypes[i].PerItemJoiner  </div>
+                                <div> @Model.CornerBrackets: @openingTypes[i].PerItemCorner </div>
+                                <div> @Model.BoardLbm: @openingTypes[i].PerItemLBM </div>
+                                <div> @Model.SelfWeight: @openingTypes[i].SelfWeight (kg) </div>
+                            </td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@* With scroll
+    <div class="result-calculations-container">
+        <div class="result-calculations-tittle-container">
+            <h3 class="result-calculations-tittle">
+                Installation Instructions
+            </h3>
+        </div>
+        <div class="result-calculations-table-container">
+            <table class="result-calculations-table border table-striped table-hover table-responsive">
+                <colgroup>
+                    <col class="col-OpeningTypes-Name col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+                    <col class="col-OpeningTypes col-lg-1 ">
+
+                </colgroup>
+                <thead class="calculations-table-header table-header border-bottom">
+                    <tr class="border head-border">
+                        <th> Name </th>
+                        <th> Type </th>
+                        <th> Width </th>
+                        <th> Height </th>
+                        <th> Board LBM </th>
+                        <th> Self-weight (kg) </th>
+                        <th> Angle brackets </th>
+                        <th> Joiner brackets </th>
+                        <th> Corner brackets </th>
+                        <th> Amount </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var openingType in openingTypes)
+                    {
+                        <tr class="calculations-table-row border">
+                            <td> @openingType.Name </td>
+                            <td> @openingType.Type </td>
+                            <td> @openingType.Width </td>
+                            <td> @openingType.Height </td>
+                            <td> @openingType.PerItemLBM </td>
+                            <td> @openingType.SelfWeight </td>
+                            <td> @openingType.PerItemAngleBrackets </td>
+                            <td> @openingType.PerItemJoiner </td>
+                            <td> @openingType.PerItemCorner </td>
+                            <td> @openingType.Amount  </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+*@
+
+<div class="result-description-container">
+    <div class="result-description-text-container">
+        <div class="result-description-text">
+            @Model.Value("openingTypesDescriptionText", fallback: Fallback.ToDefaultValue)
+        </div>
+    </div>
+</div>

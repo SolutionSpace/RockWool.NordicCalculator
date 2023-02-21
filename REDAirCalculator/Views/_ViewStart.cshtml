@@ -1,0 +1,13 @@
+﻿@using System.Configuration
+
+@{
+    Layout = "Master.cshtml";
+
+    // render master settings
+    Home rootPage = (Home)ViewContext.Controller.ControllerContext.GetUmbracoContext().ContentCache.GetAtRoot().First();
+
+    ViewContext.Controller.TempData["masterTitle"] = rootPage.Title; // title
+    ViewContext.Controller.TempData["masterGTM"] = rootPage.GtmTrackingCode; // gtm
+    ViewContext.Controller.TempData["isDev"] = Convert.ToBoolean(ConfigurationManager.AppSettings["isDev"]); // isDev
+    ViewContext.Controller.TempData["isLocal"] = Request.IsLocal; // isLocal
+}

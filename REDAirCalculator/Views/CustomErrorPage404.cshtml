@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.CustomErrorPage404>
+
+@using REDAirCalculator.Utilities
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@{
+     Layout = "Master.cshtml";
+    ViewBag.Title = Model.Name;
+}
+
+<html>
+<head>
+    <title>Red AIR Calculator - Oooops @Model.ErrorNumber</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    @Html.VersionedFile("/Content/css/main.css")
+</head>
+
+<body>
+    <div class="error-page-container">
+        <h1>@Model.ErrorNumber</h1>
+        <p>
+            @Model.Value("mainText", fallback: Fallback.ToDefaultValue)
+        </p>
+
+        <p><a href='/'> @Model.Value("buttonText", fallback: Fallback.ToDefaultValue)</a></p>
+    </div>
+</body>
+</html>

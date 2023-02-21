@@ -1,0 +1,16 @@
+﻿@import "variables.scss";
+@import "mixins/common";
+
+.pagination-container {
+
+    li.active {
+        a {
+            background-color: $projectsTableHeaderBackGroundColor !important;
+            border-color: $projectsTableHeaderBackGroundColor !important;
+        }
+    }
+
+    a {
+        padding: 2px 8px !important;
+    }
+}

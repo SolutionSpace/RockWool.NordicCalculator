@@ -1,0 +1,116 @@
+@import "variables.scss";
+
+.opening-types-container {
+    table {
+        table-layout: fixed;
+
+        td, th {
+            text-align: left !important;
+            padding-left: 10px !important;
+            padding-right: 0px !important;
+        }
+
+        td:nth-child(1) {
+            padding-top: 15px !important;
+        }
+
+        th:first-child, td:first-child {
+            width: 18%;
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            width: 15%;
+            word-break: break-all;
+
+            @media only screen and (max-width: $smDevicesWidth) {
+                width: 25%;
+            }
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%;
+
+            @media only screen and (max-width: $smDevicesWidth) {
+                width: 16.25%;
+            }
+        }
+
+        th:nth-child(4), td:nth-child(4) {
+            width: 20%;
+
+            @media only screen and (max-width: $smDevicesWidth) {
+                width: 16.25%;
+            }
+        }
+
+        th:nth-child(5), td:nth-child(5) {
+            width: 20%;
+
+            @media only screen and (max-width: $smDevicesWidth) {
+                width: 12.5%;
+            }
+        }
+
+        th:last-child, td:last-child {
+            width: 5%;
+
+            @media only screen and (max-width: $smDevicesWidth) {
+                width: 12%;
+            }
+
+            padding-right: 10px !important;
+        }
+
+        td:last-child {
+
+            img {
+                cursor: pointer;
+                width: 20px;
+            }
+        }
+
+        input {
+            width: 100%
+        }
+
+        .bootstrap-select {
+            height: 37px
+        }
+
+        .opening-types-selector {
+            .dropdown-toggle {
+                width: auto;
+                padding-left: 0;
+                margin-left: 0;
+            }
+        }
+    }
+
+    .result-tittle {
+        font-size: 1.5rem;
+    }
+
+    .add-opening-type-btn {
+        display: inline-block;
+        cursor: pointer;
+        float: right;
+        padding-top: 5px;
+        padding-bottom: 10px;
+
+        img {
+            width: 20px;
+        }
+
+        span {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+    }
+
+    .opening-types-errors {
+        span {
+            font-size: 0.75rem;
+            color: #6c757d !important;
+        }
+    }
+}

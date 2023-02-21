@@ -1,0 +1,135 @@
+﻿@import "variables.scss";
+@import "mixins/common";
+
+.projects-container {
+    width: 100%;
+    margin: 0 auto;
+
+    .projects-bar-container {
+        margin-top: 55px;
+        margin-bottom: 20px;
+        @include flex-wrap;
+        justify-content: space-between;
+
+        .projects-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: $projectsTitleColor;
+        }
+
+        .projects-button {
+            @include flex-wrap;
+            color: $projectsTitleColor;
+            text-transform: none;
+            font-size: 16px;
+            align-items: center;
+            justify-content: center;
+
+            .projects-button-icon {
+                @include flex-wrap;
+                align-items: center;
+                margin: 5px;
+            }
+        }
+    }
+
+    .projects-title-container {
+        width: 40%
+    }
+
+    .projects-button-container {
+        width: 60%;
+        text-align: right
+    }
+
+    .projects-table {
+        width: 100%;
+        border-spacing: 5px;
+
+        .col-Project {
+            width: 33%;
+        }
+
+        .col-Creation-Date {
+            width: 17%;
+        }
+
+        .col-Last-Updtaed {
+            width: 25%;
+        }
+
+        .col-Actions {
+            width: 17%;
+        }
+
+        .projects-table-header {
+            height: 56px;
+            line-height: 36px;
+            background-color: $projectsTableHeaderBackGroundColor;
+            color: $projectsTableHeaderColor;
+            font-size: 12px;
+        }
+
+        .projects-table-row {
+            cursor: pointer;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        td, th {
+            padding: 0 10px;
+            height: 100%;
+            text-align: left
+        }
+
+        .btn {
+            margin: 0;
+        }
+
+        td:nth-child(4), th:nth-child(4) {
+            display: flex;
+            display: -moz-box;
+            justify-content: center;
+        }
+
+        .projects-table-btn-td div {
+            @include flex-wrap;
+            justify-content: space-around;
+        }
+
+
+
+        .no-projects {
+            padding-left: 0;
+            background-color: transparent;
+        }
+    }
+
+    .projects-types-selector {
+        width: auto !important;
+
+        .dropdown-toggle {
+            color: $projectsTitleColor;
+            text-transform: none;
+            font-size: 16px;
+        }
+
+        .filter-option-inner-inner {
+            color: $projectsTitleColor;
+        }
+
+        button {
+            height: 39px;
+        }
+    }
+
+    select.projects-types-selector {
+        display: none !important;
+    }
+
+    .projects-item-container {
+        display: inline-block;
+    }
+}

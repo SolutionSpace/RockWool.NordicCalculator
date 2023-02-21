@@ -1,0 +1,30 @@
+﻿@using REDAirCalculator.Models.ResultViewModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<LinkCalculator>
+
+@{
+    Layout = null;
+    LinkResultsViewModel calculatedData = TempData["CalculatedLinkData"] as LinkResultsViewModel;
+
+    TempData["LinkCalculationsPart"] = calculatedData.LinkCalculations;
+    TempData["LinkInstallationInstractions"] = calculatedData.InstalationInstractions;
+    TempData["LinkResultsPart"] = calculatedData.LinkResultsPart;
+    TempData["LinkPrecutPlanks"] = calculatedData.PrecutPlanks;
+}
+
+    <div class="result-container">
+        <div class="result-tittle-container">
+            <h3 class="result-tittle">@Model.ResulterPageTilte</h3>
+        </div>
+
+        @Html.Partial("~/Views/Partials/LinkResulterSection/_Results.cshtml")
+        @Html.Partial("~/Views/Partials/LinkResulterSection/_InstallationInstructions.cshtml")
+        @Html.Partial("~/Views/Partials/LinkResulterSection/_Calculations.cshtml")
+        <div class="result-description-container">
+            <div class="result-description-text-container">
+                <div class="result-description-text">
+                    @Model.Value("resulterEndText", fallback: Fallback.ToDefaultValue)
+                </div>
+            </div>
+        </div>
+    </div>

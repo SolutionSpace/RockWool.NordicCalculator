@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+
+    bool isResulter = (bool)TempData["IsResulter"];
+    string tableResponsiveClass = isResulter ? "table-responsive" : string.Empty;
+
+    IUmbracoContextFactory contextFactory = DependencyResolver.Current.GetService<IUmbracoContextFactory>();
+    var homeContainer = contextFactory.EnsureUmbracoContext().UmbracoContext.ContentCache.GetAtRoot().Where(x => x.GetType() == typeof(Home)).Select(x => (Home)x);
+    var linkModel = (LinkCalculator)homeContainer.First().Children.First(x => x.GetType() == typeof(LinkCalculator));
+
+    var settingsContainer = contextFactory.EnsureUmbracoContext().UmbracoContext.ContentCache.GetAtRoot().Where(x => x.GetType() == typeof(Settings)).Select(x => (Settings)x);
+    var linkConstants = (LinkConstants)settingsContainer.First().Children.First(x => x.GetType() == typeof(LinkConstants));
+    string translateType = (string)TempData["typeTranslate"];
+    string translateWidth = (string)TempData["translateWidth"];
+    string translateHeight = (string)TempData["translateHeight"];
+    string translateIsRequired = (string)TempData["translateIsRequired"];
+
+    int minValue = 1;
+    int maxWidthValue = linkConstants.MaxWindowWidth;
+    int maxHeightValue = linkConstants.MaxWindowHeight;
+}
+
+
+<div class="result-container opening-types-container">
+
+    <div class="result-tittle-container">
+        <h3 class="result-tittle">@linkModel.HeadingOpeningTypes</h3>
+    </div>
+
+    <div class="result-table-container">
+        <table class="result-table border table-striped table-hover @tableResponsiveClass">
+            <thead class="result-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th>@linkModel.HeadingOpeningType</th>
+                    <th>@linkModel.HeadingWindowDoor</th>
+                    <th>@linkModel.HeadingWidth</th>
+                    <th>@linkModel.HeadingHeight</th>
+                    <th>@linkModel.HeadingAmount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="result-table-row border">
+                    <td>
+                        <span class="type-name">@linkModel.Window @translateType</span>
+                        <span class="type-number">1</span>
+                    </td>
+                    <td>
+                        <select class="opening-types-selector">
+                            <option>@linkModel.Window</option>
+                            <option>@linkModel.Door</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="width"
+                               name="Width1"
+                               data-val="true"
+                               data-val-required="@linkModel.Window @translateType 1: @translateWidth @translateIsRequired"
+                               min="@minValue"
+                               max="@maxWidthValue"
+                               type="number"
+                               value="1000">
+                    </td>
+                    <td>
+                        <input class="height"
+                               name="Height1"
+                               data-val="true"
+                               data-val-required="@linkModel.Window @translateType 1: @translateHeight @translateIsRequired"
+                               type="number"
+                               min="@minValue"
+                               max="@maxHeightValue"
+                               value="1000">
+                    </td>
+                    <td>
+                        <input type="number"
+                               value="1"
+                               min="0">
+                    </td>
+                    <td>
+                        <img class="remove-opening-type-btn" src="~/Content/images/delete-opening-type-icon.png" style="display: none" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="opening-types-errors">
+            <span class="field-validation-valid"
+                  data-valmsg-for="Width1"
+                  data-valmsg-replace="true"
+                  style="display: block"></span>
+
+            <span class="field-validation-valid"
+                  data-valmsg-for="Height1"
+                  data-valmsg-replace="true"
+                  style="display: block"></span>
+        </div>
+
+        <div class="add-opening-type-btn">
+            <img src="~/Content/images/add-opening-type-icon.png" />
+            <span>
+                @linkModel.AddNewType
+            </span>
+        </div>
+
+    </div>
+</div>

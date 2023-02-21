@@ -1,0 +1,95 @@
+﻿@using REDAirCalculator.Utilities
+@using REDAirCalculator.Models.ResultModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<LinkCalculator>
+
+@{
+    Layout = null;
+
+    List<LinkResultsItemModel> results = TempData["LinkResultsPart"] as List<LinkResultsItemModel>;
+    bool precutPlanksSelected = (bool)TempData["LinkPrecutPlanks"];
+
+    string language = Model.GetCulture().Culture;
+}
+
+
+<div class="result-calculations-container">
+    <div class="result-calculations-tittle-container">
+        <h3 class="result-calculations-tittle">
+            @Model.HeadingProducts
+        </h3>
+    </div>
+    <div class="result-calculations-table-container">
+        <table class="result-calculations-table border table-striped table-hover ">
+            <colgroup>
+                <col class="col-Link-Item-Number-Link ">
+                <col class="col-Link-Quantity-Link ">
+                <col class="col-Link-Description-Link ">
+            </colgroup>
+            <thead class="calculations-table-header table-header border-bottom">
+                <tr class="border head-border">
+                    <th> @Model.HeadingSapno </th>
+                    <th> @Model.HeadingAmount </th>
+                    <th> @Model.HeadingDescription </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var product in results)
+                {
+                    if (product.Units != 0)
+                    {
+                        <tr class="calculations-table-row border">
+                            <td>
+                                @if (product.SAPNumber != 0)
+                                {
+                                    <span> @product.SAPNumber </span>
+                                }
+                                <br />
+                                @if (CalculatorHelper.HasDbNumber(product.DBNumber, language))
+                                {
+                                    <span>@product.DBLabel: @product.DBNumber</span>
+                                }
+                            </td>
+                            <td style="color: #D4001E"> @product.Units </td>
+                            <td>
+                                (@if (product.Units == 1)
+                                {<span>@product.UnitsInSingular</span>}
+                            else {<span>@product.UnitsInPlural</span>}) @product.Description
+
+                                @if (product.DeliveredLBM != 0)
+                                {<div> @Model.DeliveredLbm:  @product.DeliveredLBM </div>}
+
+                                @if (product.UsedBrackets != 0)
+                                {<div> @Model.UsedBrackets:  @product.UsedBrackets </div>}
+
+                                @if (product.UsedScrews != 0)
+                                {<div> @Model.UsedScrews:  @product.UsedScrews </div>}
+
+                                @if (product.DeliveredBrackets != 0)
+                                {
+                                    <div> @Model.DeliveredBrackets:  @product.DeliveredBrackets </div>
+                                }
+
+                                @if (product.DeliveredBrackets == 0 && product.HasEmptyMessage)
+                                {
+                                    <div> @Model.DeliveredBrackets:  @Model.NoDeliveredBracketsMessage </div>
+                                }
+
+                                @if (product.DeliveredScrews != 0)
+                                {
+                                    <div> @Model.DeliveredScrews:  @product.DeliveredScrews </div>
+                                }
+
+                                @if (product.PlankDepth != 0)
+                                {<div> @Model.PlankDepth: @product.PlankDepth </div>}
+                                @if (product.DeliveredM2 != 0)
+                                {<div> @Model.Delivered: @product.DeliveredM2  m<sup>2</sup></div>}
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

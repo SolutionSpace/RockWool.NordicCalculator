@@ -1,0 +1,104 @@
+@import "variables.scss";
+@import "mixins/common";
+@import "line-inputs.scss";
+@import "header-pop-ups.scss";
+
+header {
+    position: sticky;
+    top: 0px;
+    z-index: 100;
+    
+    .log-out-wrapper {
+        display: none;
+    }
+
+    nav {
+        background-color: $headerBgColor !important;
+        display: block !important;
+        padding-bottom: 0 !important;
+
+        .header-container {
+            max-width: $headerNavigationMaxWidth;
+
+            @media only screen and (max-width: 990px) {
+                height: auto;
+
+                .separator {
+                    display: none !important;
+                }
+            }
+
+            .logo {
+                padding-top: 0;
+
+                img {
+                    min-width: 185px;
+                    max-height: 45px;
+                }
+            }
+
+            .nav-link {
+                cursor: pointer;
+                font-size: 18px;
+                line-height: 22px;
+                color: white !important;
+                text-transform: none;
+                padding-bottom: 15px;
+
+                span {
+                    position: relative;
+                    top: 2px;
+                }
+            }
+
+            .nav-separator {
+
+                .nav-link {
+                    padding-left: 0;
+                    padding-right: 0
+                }
+            }
+
+            .nav-language {
+                margin-left: 20px;
+
+                .language-selector {
+                    .dropdown-toggle {
+                        color: white;
+                        font-size: 18px;
+                        padding-left: 2px;
+                        padding-right: 0;
+                        margin-bottom: 0
+                    }
+
+                    .dropdown-item {
+                        justify-content: center;
+                    }
+
+                    > select.mobile-device:focus + .dropdown-toggle, .dropdown-toggle:focus {
+                        outline: none !important;
+                        outline-offset: 0;
+                    }
+
+                    .filter-option-inner-inner {
+                        color: white;
+                    }
+                }
+            }
+
+            .header-projector {
+                margin-right: 20px;
+                color: rgba(255, 255, 255, 0.6) !important;
+            }
+
+            .header-projector.active {
+                color: #fff !important
+            }
+
+            .logout-button {
+                padding-top: 7px;
+                padding-bottom: 0px;
+            }
+        }
+    }
+}

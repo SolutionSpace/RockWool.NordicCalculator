@@ -1,0 +1,15 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using REDAirCalculator.Models.DTO
+
+@{
+    Layout = null;
+
+    IPagedList<ProjectDto> projects = TempData["pageData"] as IPagedList<ProjectDto>;
+    int projectsType = (int)TempData["projectsType"];
+}
+
+@if (projects.PageCount > 1)
+{
+    @Html.PagedListPager(projects, p => $"{Model.Url}?p={p}&t={projectsType}")
+}

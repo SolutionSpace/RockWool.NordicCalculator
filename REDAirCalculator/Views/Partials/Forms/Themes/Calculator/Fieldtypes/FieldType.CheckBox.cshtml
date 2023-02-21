@@ -1,0 +1,9 @@
+@model Umbraco.Forms.Mvc.Models.FieldViewModel
+
+<div class="checkbox form-checkbox ">
+    <label>
+        <input type="checkbox"  name="@Model.Name" id="@Model.Id" value="@Model.Value.ToLower()" class="form-checkbox-check form-control"
+               @if (Model.Mandatory) { <text> data-val="true" data-val-requiredcb="@Model.RequiredErrorMessage" </text>  }
+               @if (Convert.ToBoolean(Model.ValueAsObject)) { <text> checked </text>  } />
+    </label>
+</div>

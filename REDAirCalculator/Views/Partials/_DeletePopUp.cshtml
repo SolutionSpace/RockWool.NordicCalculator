@@ -1,0 +1,47 @@
+﻿@using System.Configuration
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<REDAirCalculator.Models.DTO.ProjectDto>
+
+@{
+    int projectsType = (int)TempData["projectsType"];
+
+    string projectsApiPath = ConfigurationManager.AppSettings["projectsApiPath"];
+
+    string projectDeleteLink = $"{projectsApiPath}/delete/?entryGuid={Model.Guid}&t={projectsType}";
+
+    // popup
+    string title = Umbraco.GetDictionaryValue("Delete title");
+    string modalText = Umbraco.GetDictionaryValue("Delete description");
+    string deletebtn = Umbraco.GetDictionaryValue("Delete button");
+    string cancelbtn = Umbraco.GetDictionaryValue("Cancel button");
+}
+
+
+<div class="modal fade" id="@Model.Guid" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-body delete-project-modal ">
+                <button type="button" class="delete-close-btn close btn btn-lg disabled" data-dismiss="modal" aria-label="Close">
+                    ✕
+                </button>
+                <h3 class="modal-title title"> @title </h3>
+                <p class="delete-desctiption"> @modalText </p>
+                <div class="delete-btn-container">
+                    <div class="buttons">
+
+                        <input class="btn btn-primary delete-submit-btn project-delete-btn"
+                               name="mail"
+                               type="submit"
+                               value="@deletebtn"
+                               onclick="projects.deleteProject(event, '@projectDeleteLink')" />
+
+
+                        <button data-dismiss="modal" class="btn btn-secondary delete-cancel-btn"> @cancelbtn </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

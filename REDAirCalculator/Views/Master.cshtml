@@ -1,0 +1,146 @@
+﻿@using System.Configuration;
+@using REDAirCalculator.Utilities
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Layout = null;
+
+    string mobileRange = ConfigurationManager.AppSettings["mobileRange"];
+
+    object masterTitle = TempData["masterTitle"];
+    string title = masterTitle != ViewBag.Title ? $"{masterTitle} - {ViewBag.Title}" : masterTitle.ToString();
+
+    bool isLocal = (bool)TempData["isLocal"];
+
+    string gtmTrackingCode = TempData["masterGTM"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    @if (!string.IsNullOrEmpty(gtmTrackingCode) && !isLocal)
+    {
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start':
+                        new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '@gtmTrackingCode');
+        </script>
+        <!-- End Google Tag Manager -->
+    }
+    @if (!isLocal)
+    {
+        <script async>
+
+            var marketoScriptsUrl = "go.rockwool.com";
+            var marketoMunchkinId = '197-QUE-642';
+            var marketoMunchkinWorkspaceId = 'j0hQedjOKwEI';
+
+            (function () {
+                var didInit = false;
+
+                function initMunchkin() {
+                    if (didInit === false) {
+                        didInit = true;
+                        var initObject = {
+                            cookieAnon: true,
+                            asyncOnly: true
+                        };
+                        if (window.marketoMunchkinWorkspaceId != null) {
+                            initObject.wsInfo = window.marketoMunchkinWorkspaceId;
+                        }
+                        Munchkin.init(window.marketoMunchkinId, initObject);
+                    }
+                }
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = '//munchkin.marketo.net/munchkin.js';
+                s.onreadystatechange = function () {
+                    if (this.readyState == 'complete' || this.readyState == 'loaded') {
+                        initMunchkin();
+                    }
+                };
+                s.onload = initMunchkin;
+                document.getElementsByTagName('head')[0].appendChild(s);
+            })();
+
+        </script>
+    }
+
+
+        <title>@title</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="~/bundles/plugins.css" rel="stylesheet" />
+
+        @Html.VersionedFile("/Content/css/main.css")
+
+        <script src="~/bundles/jquery.js"></script>
+    </head>
+
+<body class="master-body-container">
+    <div class="page-preloader"></div>
+
+    @if (!string.IsNullOrEmpty(gtmTrackingCode) && !isLocal)
+    {
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=@gtmTrackingCode"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    }
+
+
+    @Html.Partial("_Header")
+
+    <div class="notification-wrapper">
+        <div class="notification-wrapper-main">
+
+        </div>
+    </div>
+
+    @RenderSection("Navigation", required: false)
+
+    <div class="wrapper">
+        @RenderBody()
+    </div>
+
+    <script src="~/bundles/plugins.js"></script>
+    <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+
+    <!-- common custom scripts -->
+    @Html.VersionedFile("/Scripts/main.js")
+    @Html.VersionedFile("/Scripts/header.js")
+
+    <script>
+    window.mobileRange = @mobileRange;
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

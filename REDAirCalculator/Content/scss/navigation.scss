@@ -1,0 +1,84 @@
+@import "variables.scss";
+@import "mixins/common";
+
+.notification-wrapper {
+    position: fixed;
+    top: 65px;
+    margin: auto;
+    width: 100%;
+    padding: 0 5px;
+    z-index: 1000;
+
+    .notification-wrapper-main{
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap:wrap;
+        width: 100%;
+        max-width: 1400px;
+        margin: auto;
+    }
+
+    .alert {
+        top: 5px;
+        right: 0px;
+        width: 30%;
+    }
+
+    .calc-error-alert { 
+        width: 100%;
+    }
+}
+
+.calculator-navigation {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    background-color: transparent;
+
+    .my-4 {
+        margin-bottom: 0 !important
+    }
+
+    .arrow-back-container {
+        cursor: pointer;
+
+        .arrow-img {
+            display: inline-block;
+            padding-bottom: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    .project-info {
+        display: inline-block;
+
+        .date {
+            font-size: 12px;
+            margin-bottom: 0
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: normal
+        }
+    }
+
+    .row {
+        @include flex-wrap;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+    }
+
+    .icons-col {
+        @include flex-wrap;
+        justify-content: flex-end;
+        -webkit-justify-content: flex-end;
+
+        img {
+            padding: 7px;
+        }
+
+        .navigation-print-button {
+            pointer-events: auto;
+        }
+    }
+}

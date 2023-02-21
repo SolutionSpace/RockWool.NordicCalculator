@@ -1,0 +1,53 @@
+﻿
+.delete-project-modal {
+
+    .modal-title {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-weight: 300;
+    }
+
+    p {
+        overflow-wrap: break-word;
+    }
+
+    .delete-close-btn {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 24px;
+        padding-right: 0;
+        padding-top: 0;
+    }
+
+    .delete-desctiption {
+        color: #171616;
+        margin-bottom: 40px;
+    }
+
+    .delete-btn-container {
+        width: 100%;
+        margin-top: 10px;
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+
+            .delete-submit-btn {
+                width: 49%;
+                height: 100%;
+                background-color: $mainColor;
+                color: white;
+                font-size: 20px;
+            }
+
+            .delete-cancel-btn {
+                width: 49%;
+                height: 100%;
+                background-color: white;
+                color: black;
+                font-size: 20px;
+            }
+        }
+    }
+}

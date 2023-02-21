@@ -1,0 +1,64 @@
+﻿@import "variables.scss";
+
+.project-form {
+    .project-close-btn {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 25px;
+        padding-right: 0;
+        padding-top: 0;
+    }
+
+    .project-title {
+        padding-top: 50px;
+        font-weight: normal;
+        font-size: 36px;
+    }
+
+    .project-input-container {
+        margin: 15px 0px;
+    }
+
+    .project-btn-container {
+        width: 100%;
+        margin-top: 10px;
+        display: inline-flex;
+        justify-content: space-between;
+
+        .bmd-form-group {
+            width: 60%;
+            padding-top: 0;
+
+            .checkbox {
+                margin-top: 2.5%;
+                display: flex;
+                justify-content: flex-start;
+
+                label{
+                    padding: 0 0 0 5px;
+                }
+            }
+        }
+
+        .buttons {
+            width: 40%;
+        }
+
+        .project-submit-btn {
+            width: 49%;
+            height: 100%;
+            background-color: $mainColor;
+            color: white;
+            font-size: 18px;
+        }
+
+        .project-cancel-btn {
+            width: 49%;
+            height: 100%;
+            background-color: white;
+            color: black;
+            font-size: 18px;
+        }
+    }
+}

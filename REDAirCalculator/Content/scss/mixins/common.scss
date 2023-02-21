@@ -1,0 +1,12 @@
+@mixin flex-wrap {
+    display: -webkit-box !important; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box !important; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox !important; /* TWEENER - IE 10 */
+    display: -webkit-flex !important; /* NEW - Chrome */
+    display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin no-padding {
+    padding-left: 0;
+    padding-right: 0
+}

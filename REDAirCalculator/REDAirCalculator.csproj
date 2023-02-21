@@ -1,0 +1,997 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\UmbracoCms.8.0.2\build\UmbracoCms.props" Condition="Exists('..\packages\UmbracoCms.8.0.2\build\UmbracoCms.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BDBFA1D3-6004-4F1F-BC9B-1A0B98B5A935}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>REDAirCalculator</RootNamespace>
+    <AssemblyName>REDAirCalculator</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES2019</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Auth0.AuthenticationApi, Version=6.5.4.0, Culture=neutral, PublicKeyToken=afe355c419914736, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.AuthenticationApi.6.5.4\lib\net452\Auth0.AuthenticationApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Auth0.Core, Version=6.5.4.0, Culture=neutral, PublicKeyToken=afe355c419914736, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.Core.6.5.4\lib\net452\Auth0.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Auth0.ManagementApi, Version=6.5.4.0, Culture=neutral, PublicKeyToken=afe355c419914736, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.ManagementApi.6.5.4\lib\net452\Auth0.ManagementApi.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core, Version=1.9.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency.1.9.9\lib\net45\ClientDependency.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency-Mvc5.1.9.3\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpTest.Net.Collections, Version=14.906.1403.1082, Culture=neutral, PublicKeyToken=06aee00cce822474, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSharpTest.Net.Collections.14.906.1403.1082\lib\net40\CSharpTest.Net.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Examine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Examine.1.0.0\lib\net452\Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.7.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.7.0.100\lib\net452\ImageProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor.Web, Version=4.10.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.Web.4.10.0.100\lib\net452\ImageProcessor.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.5.4.0\lib\net46\LightInject.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Annotation, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Annotation.1.1.0\lib\net46\LightInject.Annotation.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Mvc.2.0.0\lib\net46\LightInject.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Web, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Web.2.0.0\lib\net46\LightInject.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.WebApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.WebApi.2.0.0\lib\net46\LightInject.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.2.0\lib\net45\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdown, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1b320cc08ad5aa89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdown.2.2.1\lib\net451\Markdown.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.2.10.0\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.2.10.0\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.5.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.5.0\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.5.5.0\lib\net461\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.OpenIdConnect.5.5.0\lib\net461\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.2\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc.1.50.4845-RC2a\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc.1.50.4845-RC2a\lib\net20\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc.1.50.4845-RC2a\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.2.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.2.0\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.4.0.138\lib\net461\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.Shared, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.Shared.4.0.138\lib\net461\MiniProfiler.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPoco, Version=3.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPoco.3.9.4\lib\net45\NPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc.1.50.4845-RC2a\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc.1.50.4845-RC2a\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Semver, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Semver.2.0.4\lib\net452\Semver.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.8.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Process, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Process.2.0.1\lib\net45\Serilog.Enrichers.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Thread, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Thread.3.0.0\lib\net45\Serilog.Enrichers.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Filters.Expressions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Filters.Expressions.2.0.0\lib\net45\Serilog.Filters.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact.Reader, Version=1.0.3.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.Reader.1.0.3\lib\net45\Serilog.Formatting.Compact.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Settings.AppSettings, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Settings.AppSettings.2.2.2\lib\net45\Serilog.Settings.AppSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.SqlServerCE.4.0.0.1\lib\net472\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.SqlServerCE.4.0.0.1\lib\net472\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.5.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.6.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.3.0\lib\net46\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.9.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Umbraco.Core, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.8.0.2\lib\net472\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Examine, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.2\lib\net472\Umbraco.Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Forms.Core, Version=8.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoForms.Core.8.1.1\lib\net472\Umbraco.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Forms.Core.Providers, Version=8.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoForms.Core.8.1.1\lib\net472\Umbraco.Forms.Core.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Forms.Web, Version=8.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoForms.Core.8.1.1\lib\net472\Umbraco.Forms.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Licensing, Version=2.0.33.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoForms.Core.8.1.1\lib\net472\Umbraco.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.ModelsBuilder.8.0.4\lib\net472\Umbraco.ModelsBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.2\lib\net472\Umbraco.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web.UI, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.2\lib\net472\Umbraco.Web.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Models\all.dll.path" />
+    <Content Include="App_Data\Models\models.hash" />
+    <Content Include="bundles\jquery.js" />
+    <Content Include="App_Plugins\UmbracoForms\Backoffice\Common\FieldTypes\CustomField.html" />
+    <Content Include="bundles\plugins.css" />
+    <Content Include="bundles\plugins.js" />
+    <Content Include="config\grid.editors.config.js" />
+    <Content Include="config\Lang\cs-CZ.user.xml" />
+    <Content Include="config\Lang\da-DK.user.xml" />
+    <Content Include="config\Lang\de-DE.user.xml" />
+    <Content Include="config\Lang\en-GB.user.xml" />
+    <Content Include="config\Lang\en-US.user.xml" />
+    <Content Include="config\Lang\es-ES.user.xml" />
+    <Content Include="config\Lang\fr-FR.user.xml" />
+    <Content Include="config\Lang\he-IL.user.xml" />
+    <Content Include="config\Lang\it-IT.user.xml" />
+    <Content Include="config\Lang\ja-JP.user.xml" />
+    <Content Include="config\Lang\ko-KR.user.xml" />
+    <Content Include="config\Lang\nb-NO.user.xml" />
+    <Content Include="config\Lang\nl-NL.user.xml" />
+    <Content Include="config\Lang\pl-PL.user.xml" />
+    <Content Include="config\Lang\pt-BR.user.xml" />
+    <Content Include="config\Lang\ru-RU.user.xml" />
+    <Content Include="config\Lang\sv-SE.user.xml" />
+    <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="config\logviewer.searches.config.js" />
+    <Content Include="Content\css\bootstrap-material-design.css" />
+    <Content Include="Content\css\bootstrap-select.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\images\add-opening-type-icon.png" />
+    <Content Include="Content\images\add.svg" />
+    <Content Include="Content\images\arrow_back.svg" />
+    <Content Include="Content\images\auth0.svg" />
+    <Content Include="Content\images\avatar.svg" />
+    <Content Include="Content\images\company.svg" />
+    <Content Include="Content\images\delete-opening-type-icon.png" />
+    <Content Include="Content\images\delete_outline.svg" />
+    <Content Include="Content\images\facade.png" />
+    <Content Include="Content\images\facade.svg" />
+    <Content Include="Content\images\folder.svg" />
+    <Content Include="Content\images\help_outline.svg" />
+    <Content Include="Content\images\preloader.gif" />
+    <Content Include="Content\images\language.svg" />
+    <Content Include="Content\images\print-logo.svg" />
+    <Content Include="Content\images\mail.svg" />
+    <Content Include="Content\images\preloader.svg" />
+    <Content Include="Content\images\print.svg" />
+    <Content Include="Content\images\projects-bin.png" />
+    <Content Include="Content\images\projects-folder.png" />
+    <Content Include="Content\images\print-logo.png" />
+    <Content Include="Content\images\rockwool-vector-logo.svg" />
+    <Content Include="Content\images\save.svg" />
+    <Content Include="Content\images\start-picture.png" />
+    <Content Include="Content\images\vinduer.png" />
+    <Content Include="Content\images\vinduer.svg" />
+    <Content Include="Content\css\paged-list-mvc.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="compilerconfig.json" />
+    <Content Include="Content\scss\main.scss" />
+    <Content Include="Content\scss\header.scss" />
+    <Content Include="Content\scss\variables.scss" />
+    <Content Include="Content\scss\start-container.scss" />
+    <Content Include="Content\fonts\AvenirLTStd-Black.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-BlackOblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Book.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-BookOblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Heavy.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-HeavyOblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Light.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-LightOblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Medium.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-MediumOblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Oblique.otf" />
+    <Content Include="Content\fonts\AvenirLTStd-Roman.otf" />
+    <Content Include="Content\scss\common.scss" />
+    <Content Include="Content\scss\fonts.scss" />
+    <Content Include="Content\scss\calculator.scss" />
+    <Content Include="Content\scss\navigation.scss" />
+    <Content Include="Content\scss\mixins\common.scss" />
+    <Content Include="Content\scss\mixins\calculator.scss" />
+    <Content Include="Content\scss\agree-checkbox.scss" />
+    <Content Include="Content\scss\projects-container.scss" />
+    <Content Include="Content\scss\result-container.scss" />
+    <Content Include="Content\scss\navigation-pop-ups.scss" />
+    <Content Include="Content\scss\media.scss" />
+    <Content Include="Content\scss\calculator-states.scss" />
+    <Content Include="Content\scss\header-pop-ups.scss" />
+    <Content Include="Content\scss\line-inputs.scss" />
+    <Content Include="Content\scss\admin-tables-container.scss" />
+    <Content Include="Content\scss\pdf-generator.scss" />
+    <Content Include="Content\scss\projects-pagination-container.scss" />
+    <Content Include="Content\scss\delete-pop-up.scss" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\4c42c33a-5e44-4610-ba8d-1dfbe5a082be.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\964d0d3a-c7f7-4e77-bc12-de0542064c15.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\e70d9efb-e25d-41f4-bfef-f355fdf3e6a3.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\1f37fc66-2c6e-46fe-9499-baba4acdeb0a.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\35b93359-3350-4f96-9411-c500c1ec70b0.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\6781ab59-98dc-4568-a2ef-352645262d96.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\6eb5c443-7681-42b2-a1e7-2664eb6ae01b.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\b9803d6a-f504-40f8-8bd0-7ed384c0cf46.json" />
+    <Content Include="Content\fonts\ArialUnicodeMS.ttf" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\390ecea4-19fd-4bb2-8cd6-2325ba04f920.json" />
+    <Content Include="App_Plugins\UmbracoForms\UmbracoForms.config" />
+    <Content Include="Content\scss\error-404.scss" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\2a37053b-75ea-41fe-9232-6a992580f946.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\62b28b73-c165-477d-80b2-f37c8060b61c.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\9c5984e4-44e8-4a3c-af0d-63f4e8797e60.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\b82317a8-927d-4756-98d6-93132b3a0084.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\cbe09361-12c8-4c84-add7-8ca8ff285a4e.json" />
+    <Content Include="Content\fonts\HelveticaNeueLight.ttf" />
+    <Content Include="Content\fonts\HelveticaNeue-MediumExt.otf" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\8bf7ccd5-3525-401d-8ab3-7f7a54743baf.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\2470c870-1bb6-4d55-9ec0-6b93d918153d.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\5dbf5e7e-0c64-4125-bf31-1e5df0b37a5f.json" />
+    <Content Include="App_Data\UmbracoForms\Data\prevaluesources\eebfa8e1-ffb4-41a5-ad87-79f5973614f2.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\46bcc6d9-934b-40b0-a1fa-99c95b7d9dcf.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\ef49cfba-0ef4-4b26-b313-78ba2df97910.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\b11876a8-15b3-49bd-bce6-c09560e959c6.json" />
+    <Content Include="Content\scss\opening-types-container.scss" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\e031bb66-b369-467c-8238-e6b1e48371b1.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\6b4cb7bf-e11e-4600-9de9-0bd563e591d2.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\e031bb66-b369-467c-8238-e6b1e48371b1.json" />
+    <Content Include="webpack.config.js" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\46fcd35d-9c9e-411b-93a0-fbf1ebfe7e3f.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\04479493-2485-47af-8746-22214434271e.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\d8e26e28-8196-4b1b-b067-e37bdf302946.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\159f4f77-de24-4d79-9dc3-6ea2f3bb6a50.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\885cdf61-f94b-4cc0-b758-b98aed5492f3.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\88e8d7fe-fbe4-498c-bfa6-d4d5b0411b4d.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\89089dfe-a220-44cc-a9fa-5160bb02349c.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\f2ebc24a-b10e-4b19-864b-5dbbaddbf40d.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\f9ee74ca-a7bd-491b-9d46-fd4f25cc462f.json" />
+    <Content Include="App_Data\UmbracoForms\Data\forms\cab0e40b-1a3b-499a-b452-6ea9b9ed0131.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\948a0308-86a9-498e-8c07-d79994dfa38c.json" />
+    <Content Include="App_Data\UmbracoForms\Data\workflows\b75fd615-c4fd-40f4-910c-e70ee0b38f1d.json" />
+    <None Include="package.json" />
+    <Content Include="Views\LinkCalculator.cshtml" />
+    <Content Include="Views\Partials\_LinkResulter.cshtml" />
+    <Content Include="Views\Partials\LinkResulterSection\_InstallationInstructions.cshtml" />
+    <Content Include="Views\Partials\LinkResulterSection\_Calculations.cshtml" />
+    <Content Include="Views\Partials\LinkResulterSection\_Results.cshtml" />
+    <Content Include="Views\Partials\_LinkOpeningTypes.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.CustomField.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.PlankDepthFieldtype.cshtml" />
+    <None Include="Web.rewrite.rules.local.config" />
+    <None Include="Web.rewrite.rules.sample.local.config" />
+    <TypeScriptCompile Include="Scripts\admin-tables.ts" />
+    <TypeScriptCompile Include="Scripts\calculator.ts" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <TypeScriptCompile Include="Scripts\interfaces\IOpeningItem.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\IOpeningType.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\IProjectTypesSelectorOptions.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\IOpeningTypesSelectorOptions.ts" />
+    <TypeScriptCompile Include="Scripts\opening-types.ts" />
+    <TypeScriptCompile Include="Scripts\form-combinations.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\CombinationModel.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\ICombinationListType.ts" />
+    <TypeScriptCompile Include="Scripts\projects.ts" />
+    <TypeScriptCompile Include="Scripts\main.ts" />
+    <TypeScriptCompile Include="Scripts\header.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\IAnchorTypeModel.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\ILanguageSelectorOptions.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\ICalculatorSelectorOptions.ts" />
+    <TypeScriptCompile Include="Scripts\interfaces\AnchorScrewModel.ts" />
+    <TypeScriptCompile Include="Scripts\resulter.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\Models\AccessoriesFlex.generated.cs" />
+    <Compile Include="App_Data\Models\AccessoriesMulti.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorFlex.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorFlexMaxTable.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorFlexMinTable.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorFolder.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorFolderFlex.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorMulti.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorMultiFolder.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorMultiMaxTable.generated.cs" />
+    <Compile Include="App_Data\Models\AFactorMultiMinTable.generated.cs" />
+    <Compile Include="App_Data\Models\AnchorScrewPullChild.generated.cs" />
+    <Compile Include="App_Data\Models\AnchorScrewPullTable.generated.cs" />
+    <Compile Include="App_Data\Models\BaseRailSpacingList.generated.cs" />
+    <Compile Include="App_Data\Models\BaseRailSpacingParameter.generated.cs" />
+    <Compile Include="App_Data\Models\BaseRailSpacingSelected.generated.cs" />
+    <Compile Include="App_Data\Models\BattThicknessChild.generated.cs" />
+    <Compile Include="App_Data\Models\BattThicknessTable.generated.cs" />
+    <Compile Include="App_Data\Models\BracketDistanceChild.generated.cs" />
+    <Compile Include="App_Data\Models\BracketDistanceTable.generated.cs" />
+    <Compile Include="App_Data\Models\ChangePasswordEmail.generated.cs" />
+    <Compile Include="App_Data\Models\Common.generated.cs" />
+    <Compile Include="App_Data\Models\CompressionDepthChild.generated.cs" />
+    <Compile Include="App_Data\Models\CompressionDepthTable.generated.cs" />
+    <Compile Include="App_Data\Models\ConsequenceClassParameter.generated.cs" />
+    <Compile Include="App_Data\Models\ConsequenceClassTable.generated.cs" />
+    <Compile Include="App_Data\Models\Constants.generated.cs" />
+    <Compile Include="App_Data\Models\CustomErrorPage404.generated.cs" />
+    <Compile Include="App_Data\Models\Email.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\FlexibleParameters.generated.cs" />
+    <Compile Include="App_Data\Models\FlexMultiCalculator.generated.cs" />
+    <Compile Include="App_Data\Models\FlexTable.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\FP.generated.cs" />
+    <Compile Include="App_Data\Models\FrictionCoefficientChild.generated.cs" />
+    <Compile Include="App_Data\Models\FrictionCoefficientTable.generated.cs" />
+    <Compile Include="App_Data\Models\Home.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\LinkCalculator.generated.cs" />
+    <Compile Include="App_Data\Models\LinkConstants.generated.cs" />
+    <Compile Include="App_Data\Models\LinkFolder.generated.cs" />
+    <Compile Include="App_Data\Models\LinkProduct.generated.cs" />
+    <Compile Include="App_Data\Models\LinkProducts.generated.cs" />
+    <Compile Include="App_Data\Models\LinkProfileTypes.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\MineralWoolCategory.generated.cs" />
+    <Compile Include="App_Data\Models\MineralWoolProd.generated.cs" />
+    <Compile Include="App_Data\Models\MultiAccessory.generated.cs" />
+    <Compile Include="App_Data\Models\MultiTable.generated.cs" />
+    <Compile Include="App_Data\Models\NumberOfScrewsFlexChild.generated.cs" />
+    <Compile Include="App_Data\Models\NumberOfScrewsFlexTable.generated.cs" />
+    <Compile Include="App_Data\Models\NumberOfScrewsFolder.generated.cs" />
+    <Compile Include="App_Data\Models\NumberOfScrewsMultiChild.generated.cs" />
+    <Compile Include="App_Data\Models\NumberOfScrewsMultiTable.generated.cs" />
+    <Compile Include="App_Data\Models\Product.generated.cs" />
+    <Compile Include="App_Data\Models\ProductsContainer.generated.cs" />
+    <Compile Include="App_Data\Models\ProfileType.generated.cs" />
+    <Compile Include="App_Data\Models\Projects.generated.cs" />
+    <Compile Include="App_Data\Models\Rail.generated.cs" />
+    <Compile Include="App_Data\Models\RailCategory.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewDistanceChild.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewDistanceFlexTable.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewDistanceMultiTable.generated.cs" />
+    <Compile Include="App_Data\Models\Screws.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewsCategory.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewType.generated.cs" />
+    <Compile Include="App_Data\Models\ScrewTypesTable.generated.cs" />
+    <Compile Include="App_Data\Models\Settings.generated.cs" />
+    <Compile Include="App_Data\Models\Startkit.generated.cs" />
+    <Compile Include="App_Data\Models\TermsAndConditions.generated.cs" />
+    <Compile Include="App_Data\Models\TerrainCategoryChild.generated.cs" />
+    <Compile Include="App_Data\Models\TerrainCategoryTable.generated.cs" />
+    <Compile Include="App_Data\Models\WindSafetyFactorParameter.generated.cs" />
+    <Compile Include="Components\UmbracoFormsHandlerComponent.cs" />
+    <Compile Include="Composers\RepositoryComposer.cs" />
+    <Compile Include="Composers\UmbracoFormsComposer.cs" />
+    <Compile Include="Controllers\Auth0Controller.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LinkCalculatorController.cs" />
+    <Compile Include="Controllers\MultiTableController.cs" />
+    <Compile Include="Controllers\FlexTableController.cs" />
+    <Compile Include="Controllers\CalculatorController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="DAL\LinkDataRepository.cs" />
+    <Compile Include="DAL\WindSpeedDataRepository.cs" />
+    <Compile Include="Models\CalculationModels\CombinationListModel.cs" />
+    <Compile Include="Models\CalculationModels\CombinationModel.cs" />
+    <Compile Include="Models\CalculationModels\WindSpeedData.cs" />
+    <Compile Include="Models\DTO\LinkFormDataDto.cs" />
+    <Compile Include="Models\DTO\OpeningTypeDto.cs" />
+    <Compile Include="Models\Pdf\DescriptionPdfData.cs" />
+    <Compile Include="Models\Pdf\LoadCalculationsPdfData.cs" />
+    <Compile Include="Models\Pdf\ForMultiPdfData.cs" />
+    <Compile Include="Models\Pdf\InputPdfData.cs" />
+    <Compile Include="Models\Pdf\DesignCheckPdfData.cs" />
+    <Compile Include="Models\Pdf\OpeningTypePdfData.cs" />
+    <Compile Include="Models\Pdf\ProjectPdfData.cs" />
+    <Compile Include="Models\ResultModels\LinkCalculationsModel.cs" />
+    <Compile Include="Models\ResultModels\LinkResultsItemModel.cs" />
+    <Compile Include="Models\ResultViewModels\DesignCheckModel.cs" />
+    <Compile Include="Models\ResultViewModels\ForMultiViewModel.cs" />
+    <Compile Include="Models\ResultViewModels\LinkResultsViewModel.cs" />
+    <Compile Include="Models\ResultViewModels\LoadCalculationsViewModel.cs" />
+    <Compile Include="Prevalue Sources\LayersNumber.cs" />
+    <Compile Include="Prevalue Sources\ScrewTypeSource.cs" />
+    <Compile Include="Utilities\AuthorizeAttribute.cs" />
+    <Compile Include="Utilities\CustomField.cs" />
+    <Compile Include="Utilities\HtmlPdfHelper.cs" />
+    <Compile Include="Utilities\LinkResultsCalculator.cs" />
+    <Compile Include="Utilities\ContentFinder.cs" />
+    <Compile Include="Utilities\LinkPdfGenerator.cs" />
+    <Compile Include="Utilities\FilesVersioning.cs" />
+    <Compile Include="Utilities\PdfHelper.cs" />
+    <Compile Include="Utilities\CalculatorHelper.cs" />
+    <Compile Include="Utilities\UrlHelper.cs" />
+    <Compile Include="Utilities\WindSpeedParser.cs" />
+    <Compile Include="Utilities\ExcelReader.cs" />
+    <Compile Include="Utilities\DateTimeLanguageConverter.cs" />
+    <Compile Include="Utilities\Hash.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WindSpeedAreaController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="DAL\FormDataRepository.cs" />
+    <Compile Include="DAL\FormRepository.cs" />
+    <Compile Include="DAL\ProductsRepository.cs" />
+    <Compile Include="DAL\ProjectRepository.cs" />
+    <Compile Include="DAL\SettingsRepository.cs" />
+    <Compile Include="Models\RegistrationModels\ChangePasswordModel.cs" />
+    <Compile Include="Models\CalculationModels\AnchorScrewDto.cs" />
+    <Compile Include="Models\DTO\CalculatedDataDto.cs" />
+    <Compile Include="Models\CalculationModels\DataValueModel.cs" />
+    <Compile Include="Models\DTO\FormDataDto.cs" />
+    <Compile Include="Models\CalculationModels\LCWTypeThicknessDto.cs" />
+    <Compile Include="Models\DTO\ProcessedFormDataDto.cs" />
+    <Compile Include="Models\RegistrationModels\LoginModel.cs" />
+    <Compile Include="Models\CalculationModels\BracketFactorModel.cs" />
+    <Compile Include="Models\CalculationModels\PartCalculationsModel.cs" />
+    <Compile Include="Models\DTO\ProductDto.cs" />
+    <Compile Include="Models\CalculationModels\UnitTypeModel.cs" />
+    <Compile Include="Models\DTO\ProjectDto.cs" />
+    <Compile Include="Models\RegistrationModels\RestorePasswordModel.cs" />
+    <Compile Include="Models\ResultModels\DescriptionModel.cs" />
+    <Compile Include="Models\ResultModels\DesignCheckModel.cs" />
+    <Compile Include="Models\ResultModels\ForMultiModel.cs" />
+    <Compile Include="Models\ResultModels\LoadCalculationsModel.cs" />
+    <Compile Include="Models\ResultModels\QuantityCalculationsModel.cs" />
+    <Compile Include="Models\CalculationModels\TableResultModel.cs" />
+    <Compile Include="Models\RegistrationModels\Email.cs" />
+    <Compile Include="Models\CalculationModels\WindModel.cs" />
+    <Compile Include="Prevalue Sources\BaseRailSpacingSource.cs" />
+    <Compile Include="Prevalue Sources\ConsequenceClassSource.cs" />
+    <Compile Include="Prevalue Sources\FrictionCoefficientSource.cs" />
+    <Compile Include="Prevalue Sources\AnchorScrewSource.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Prevalue Sources\InsulationThicknessSource.cs" />
+    <Compile Include="Utilities\JavaScriptConvert.cs" />
+    <Compile Include="Utilities\FormHelper.cs" />
+    <Compile Include="Utilities\QuantityCalculator.cs" />
+    <Compile Include="Utilities\ResultCalculator.cs" />
+    <Compile Include="Utilities\TableCalculator.cs" />
+    <Compile Include="Utilities\PdfGenerator.cs" />
+    <Compile Include="Utilities\MailTexts.cs" />
+    <Compile Include="Utilities\UnitsNames.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\imageprocessor\security.config" />
+    <Content Include="config\imageprocessor\processing.config" />
+    <Content Include="config\imageprocessor\cache.config" />
+    <Content Include="config\umbracoSettings.config" />
+    <Content Include="config\tinyMceConfig.config" />
+    <Content Include="config\serilog.user.config" />
+    <Content Include="config\serilog.config" />
+    <Content Include="config\HealthChecks.config" />
+    <Content Include="config\ClientDependency.config" />
+    <Content Include="config\BackOfficeTours\getting-started.json" />
+    <None Include="packages.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\MacroPartials\InsertUmbracoFormWithTheme.cshtml" />
+    <Content Include="Views\Master.cshtml" />
+    <Content Include="Views\Calculator.cshtml" />
+    <Content Include="Views\Home.cshtml" />
+    <Content Include="Views\Partials\_Header.cshtml" />
+    <Content Include="Views\Projects.cshtml" />
+    <Content Include="Views\Partials\Forms\Emails\Example-Template.cshtml" />
+    <Content Include="Views\Partials\Forms\Export\excel.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.CheckBox.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.CheckBoxList.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DataConsent.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DatePicker.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.DropDownList.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.FileUpload.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.HiddenField.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.PasswordField.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.RadioButtonList.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\Fieldtype.Recaptcha2.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.Text.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.Textarea.cshtml" />
+    <Content Include="Views\Partials\Forms\Fieldtypes\FieldType.Textfield.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\bootstrap3-horizontal\Fieldtypes\FieldType.RadioButtonList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\bootstrap3-horizontal\Form.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\DatePicker.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.CheckBox.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.CheckBoxList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DataConsent.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DatePicker.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.DropDownList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.FileUpload.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.HiddenField.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PasswordField.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.RadioButtonList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\Fieldtype.Recaptcha2.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Text.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Textarea.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Textfield.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Form.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Render.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Script.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\ScrollToFormScript.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\default\Submitted.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Form.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.CheckBox.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.CheckBoxList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.DataConsent.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.DatePicker.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.DropDownList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.FileUpload.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.HiddenField.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.PasswordField.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.RadioButtonList.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\Fieldtype.Recaptcha2.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.Text.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.Textarea.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Fieldtypes\FieldType.Textfield.cshtml" />
+    <Content Include="Views\Partials\_Navigation.cshtml" />
+    <Content Include="Views\Partials\_Resulter.cshtml" />
+    <Content Include="Views\Partials\_Logout.cshtml" />
+    <Content Include="Views\Partials\_Login.cshtml" />
+    <Content Include="Views\Partials\_Register.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\DatePicker.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Render.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Script.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\ScrollToFormScript.cshtml" />
+    <Content Include="Views\Partials\Forms\Themes\Calculator\Submitted.cshtml" />
+    <Content Include="Views\Partials\ResulterSections\_Products.cshtml" />
+    <Content Include="Views\Partials\ResulterSections\_LoadCalculations.cshtml" />
+    <Content Include="Views\Partials\ResulterSections\_ForMulti.cshtml" />
+    <Content Include="Views\Partials\ResulterSections\_DesignCheck.cshtml" />
+    <Content Include="Views\FlexTable.cshtml" />
+    <Content Include="Views\MultiTable.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Partials\_EmailPopUp.cshtml" />
+    <Content Include="Views\Partials\_DeletePopUp.cshtml" />
+    <Content Include="Views\Partials\_ProjectsPagination.cshtml" />
+    <Content Include="Views\Partials\_Change_Password.cshtml" />
+    <Content Include="Views\Partials\_Restore_Password.cshtml" />
+    <Content Include="Views\Partials\_TermsPopUp.cshtml" />
+    <Content Include="Views\CustomErrorPage404.cshtml" />
+    <Content Include="Views\MacroPartials\RenderUmbracoFormScripts.cshtml" />
+    <Content Include="Views\Partials\ResulterSections\_Description.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Web.custom.errors.config" />
+    <None Include="Web.custom.errors.sample.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.local.config" />
+    <None Include="Web.local.connection.config" />
+    <None Include="Web.local.connection.sample.config" />
+    <None Include="Web.local.sample.config" />
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64829</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://local.redair.rockwool.dk/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets'))" />
+    <Error Condition="!Exists('..\packages\UmbracoCms.8.0.2\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.8.0.2\build\UmbracoCms.props'))" />
+    <Error Condition="!Exists('..\packages\UmbracoCms.8.0.2\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.8.0.2\build\UmbracoCms.targets'))" />
+    <Error Condition="!Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.targets'))" />
+  </Target>
+  <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
+  <Import Project="..\packages\UmbracoCms.8.0.2\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.8.0.2\build\UmbracoCms.targets')" />
+  <Import Project="..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.3.5.3\build\Microsoft.TypeScript.MSBuild.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!--<Target Name="AfterBuild">
+    <Exec Command="npm run webpack-bundle" />
+  </Target>-->
+</Project>

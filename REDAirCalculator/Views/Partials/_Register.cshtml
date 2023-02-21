@@ -1,0 +1,169 @@
+﻿@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    @*
+        You can specify a custom member type alias in the constructor, the default is 'Member'
+        for example, to use 'Custom Member' you'd use this syntax:
+
+        var registerModel = Members.CreateRegistrationModel("Custom Member");
+    *@
+
+    var registerModel = Members.CreateRegistrationModel();
+
+    @*
+        Configurable here:
+
+        registerModel.RedirectUrl       - Optional. What path to redirect to if registration is successful.
+                                          By default the member will be redirected to the current umbraco page
+                                          unless this is specified.
+
+        registerModel.UsernameIsEmail   - the default is true
+                                          if you want the username to be different from the email
+                                          address, set this to true and add a new Username field in
+                                          the form below
+
+                                          @Html.LabelFor(m => registerModel.Username)
+                                          @Html.TextBoxFor(m => registerModel.Username)
+                                          @Html.ValidationMessageFor(m => registerModel.Username)
+    *@
+
+    registerModel.UsernameIsEmail = false;
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+
+    var success = TempData["FormSuccess"] != null;
+
+    // popup
+    string registrationTitle = Umbraco.GetDictionaryValue("Registration title");
+    string registrationName = Umbraco.GetDictionaryValue("Registration name");
+    string registrationPassword = Umbraco.GetDictionaryValue("Registration password");
+    string registrationEmail = Umbraco.GetDictionaryValue("Registration email");
+    string registrationButton = Umbraco.GetDictionaryValue("Registration button");
+
+    // validation
+    string registrationNameRequired = Umbraco.GetDictionaryValue("Registration name required");
+    string registrationEmailRequired = Umbraco.GetDictionaryValue("Registration email required");
+    string registrationCompanyRequired = Umbraco.GetDictionaryValue("Registration company required");
+    string registrationPasswordRequired = Umbraco.GetDictionaryValue("Registration password required");
+    string registrationValidEmail = Umbraco.GetDictionaryValue("Registration valid email");
+}
+
+@*NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed*@
+@Html.RenderJsHere()
+
+@if (success)
+{
+    @* This message will show if RedirectOnSucces is set to false (default) *@
+    <p>Registration succeeded.</p>
+}
+else
+{
+    using (Html.BeginUmbracoForm("HandleRegisterMember", "Register", FormMethod.Post, new { @class = "register-form" }))
+    {
+<fieldset>
+    <button type="button" class="close-btn close btn btn-lg disabled" data-dismiss="modal" aria-label="Close">
+        ✕
+    </button>
+
+    <h3 class="modal-title title" id="exampleModalLongTitle">@registrationTitle</h3>
+
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("registerModel", true)
+
+    @Html.Hidden("entryGuid", TempData["Forms_Current_Record_id"], new { id = "entryGuid_register" })
+    @Html.Hidden("formGuid", TempData["FormGuid"], new { id = "formGuid_register" })
+
+    <div class="form-group">
+        <label for="registerModel_Name" class="bmd-label-floating">
+            @registrationName
+        </label>
+        <input id="registerModel_Name"
+               class="form-control"
+               name="registerModel.Name"
+               data-val="true"
+               data-val-required="@registrationNameRequired"
+               type="text" value="" />
+        <span class="field-validation-valid bmd-help"
+              data-valmsg-for="registerModel.Name"
+              data-valmsg-replace="true">
+        </span>
+    </div>
+
+    <div class="form-group">
+        <label for="registerModel_Email"
+               class="bmd-label-floating">@registrationEmail</label>
+            <input id="registerModel_Email"
+                   class="form-control"
+                   name="registerModel.Email"
+                   data-val="true"
+                   data-val-required="@registrationEmailRequired"
+                   data-val-regex="@registrationValidEmail"
+                   type="email"
+                   value=""
+                   data-val-regex-pattern="[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?" />
+            <span class="field-validation-valid bmd-help"
+                  data-valmsg-for="registerModel.Email"
+                  data-valmsg-replace="true"></span>
+        </div>
+
+        @if (registerModel.MemberProperties != null)
+        {
+            @*
+                It will only displays properties marked as "Member can edit" on the "Info" tab of the Member Type.
+            *@
+            for (var i = 0; i < registerModel.MemberProperties.Count; i++)
+            {
+                <div class="form-group bmd-form-group">
+                    @Html.LabelFor(m => registerModel.MemberProperties[i].Alias, registerModel.MemberProperties[i].Name, new { @class = "bmd-label-floating" })
+                    @*
+                        By default this will render a textbox but if you want to change the editor template for this property you can
+                        easily change it. For example, if you wanted to render a custom editor for this field called "MyEditor" you would
+                        create a file at ~/Views/Shared/EditorTemplates/MyEditor.cshtml", then you will change the next line of code to
+                        render your specific editor template like:
+                        @Html.EditorFor(m => profileModel.MemberProperties[i].Value, "MyEditor")
+                    *@
+                    @Html.TextBoxFor(m => registerModel.MemberProperties[i].Value, new { @class = "form-control", @id = registerModel.MemberProperties[i].Name, data_val="true", data_val_required=registrationCompanyRequired })
+                    @Html.HiddenFor(m => registerModel.MemberProperties[i].Alias)
+                </div>
+            }
+        }
+
+        @Html.HiddenFor(m => registerModel.MemberTypeAlias)
+        @Html.HiddenFor(m => registerModel.RedirectUrl)
+        @Html.HiddenFor(m => registerModel.UsernameIsEmail)
+
+        <div class="form-group">
+            <label for="registerModel_Password"
+                   class="bmd-label-floating">@registrationPassword</label>
+                <input id="registerModel_Password"
+                       class="form-control"
+                       data-val="true"
+                       data-val-required="@registrationPasswordRequired"
+                       name="registerModel.Password" type="password"
+                       minlength="6" />
+                <span class="field-validation-valid bmd-help"
+                      data-valmsg-for="registerModel.Password"
+                      data-valmsg-replace="true"></span>
+            </div>
+
+            @Html.ValidationSummary()
+
+
+            <div class="submit-btn-container">
+                <button class="btn submit-btn">@registrationButton</button>
+            </div>
+
+        </fieldset>
+    }
+}
+
+
+
+
+
+

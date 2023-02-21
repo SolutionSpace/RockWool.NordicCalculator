@@ -1,0 +1,272 @@
+﻿@using REDAirCalculator.Models.RegistrationModels
+@using Umbraco.Core.Services
+@using Umbraco.Web.Composing
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Layout = null;
+
+    MembershipUser user = Membership.GetUser();
+
+    IReadOnlyDictionary<string, PublishedCultureInfo> cultures = Model.Cultures;
+    PublishedCultureInfo currentCulture = Model.GetCulture();
+
+    Home rootPage = (Home)UmbracoContext.ContentCache.GetAtRoot().First();
+    Projects projects = (Projects)rootPage.Children().FirstOrDefault(d => d.ContentType.Alias == "projects");
+
+    string projectsUrl = projects.Url();
+    if (TempData["IsLinkSystem"] != null)
+    {
+        bool isLinkSystem = (bool)TempData["IsLinkSystem"];
+        projectsUrl = isLinkSystem ? $"{projects.Url()}?t=1" : projects.Url();
+    }
+
+    bool isDev = (bool)TempData["isDev"];
+    bool isLocal = (bool)TempData["isLocal"];
+
+    IEnumerable<IDomain> domains = new List<IDomain>();
+    if (!isDev || isLocal)
+    {
+        IDomainService domainService = Current.Services.DomainService;
+        domains = domainService.GetAssignedDomains(rootPage.Id, false);
+    }
+
+    string newBrowserDownloadText = Umbraco.GetDictionaryValue("New browser download text");
+    string headerLoginIcon = Umbraco.GetDictionaryValue("Login icon");
+    string headerProjectsIcon = Umbraco.GetDictionaryValue("Projects icon");
+    string headerRegisterIcon = Umbraco.GetDictionaryValue("Register icon");
+
+    string calculationErrorMessage = Umbraco.GetDictionaryValue("Calculation error message");
+    string calculationLinkErrorMessage = Umbraco.GetDictionaryValue("Calculation error message - LINK");
+    string projectDeleteMessage = Umbraco.GetDictionaryValue("Project delete message");
+    string projectEmailMessage = Umbraco.GetDictionaryValue("Project email message");
+    string projectErrorMessage = Umbraco.GetDictionaryValue("Project error message");
+    string projectPrintMessage = Umbraco.GetDictionaryValue("Project print message");
+    string projectSaveMessage = Umbraco.GetDictionaryValue("Project save message");
+    string memberRecoveryPasswordMsg = Umbraco.GetDictionaryValue("Password recovery message");
+
+    // saving of project state after language changing
+    string projectsTypeQuery = Request.QueryString["t"];
+    string projectsTypeQueryPath = string.Empty;
+    if (!string.IsNullOrEmpty(projectsTypeQuery))
+    {
+        projectsTypeQueryPath = $"/?t={projectsTypeQuery}";
+    }
+}
+
+<header>
+    <div class="alert alert-danger browserWarning" role="alert" style="display: none">
+        @newBrowserDownloadText
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark static-top">
+        <div class="container header-container">
+            <a class="navbar-brand logo"
+               href="@rootPage.Url()">
+                <img src="~/Content/images/rockwool-vector-logo.svg"
+                     alt="logo" />
+            </a>
+            <button class="navbar-toggler float-right"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse"
+                 id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    @if (user != null)
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link header-projector active"
+                               href="@projectsUrl">
+                                @headerProjectsIcon
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @{ Html.RenderAction("RenderLogout", "Members"); }
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item active">
+                            <a class="nav-link header-projector"
+                               data-toggle="modal"
+                               data-target="#loginModal">
+                                @headerProjectsIcon
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link register" href="/umbraco/surface/auth0/authenticate?forceAuth0=true"
+                               @*data-toggle="modal"
+                               data-target="#registerModal"*@>
+                                @headerRegisterIcon
+                            </a>
+                        </li>
+                        <li class="separator nav-item nav-separator">
+                            <a class="nav-link disabled">/</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link login"  href="/umbraco/surface/auth0/authenticate?forceAuth0=true"
+                               @*data-toggle="modal"
+                               data-target="#loginModal"*@>
+                                @headerLoginIcon
+                                <img src="~/Content/images/avatar.svg" />
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item nav-language">
+                        <img src="~/Content/images/language.svg" />
+                        <select class="language-selector">
+                            @foreach (var (culture, infos) in cultures.Where(language => language.Key != "fi"))
+                            {
+                                string cultureUrl = "/" + culture + "/" + infos.UrlSegment;
+
+                                if (!isDev || isLocal)
+                                {
+                                    string currentLanguage = currentCulture.Culture;
+
+                                    List<IDomain> languageDomains = domains.Where(domain => domain.LanguageIsoCode == culture).ToList();
+
+                                    string domainName = languageDomains.First().DomainName;
+
+                                    if (culture == "en" && currentLanguage != "en")
+                                    {
+                                        if (currentLanguage == "da")
+                                        {
+                                            currentLanguage = "dk";
+                                        }
+
+                                        if (currentLanguage == "sv")
+                                        {
+                                            currentLanguage = "se";
+                                        }
+
+                                        domainName = languageDomains.Single(domain => domain.DomainName.Contains($".{currentLanguage}/en")).DomainName;
+                                    }
+
+                                    cultureUrl = $"{domainName}/{infos.UrlSegment}";
+                                }
+
+                                if (!string.IsNullOrEmpty(projectsTypeQuery))
+                                {
+                                    cultureUrl = $"{cultureUrl}{projectsTypeQueryPath}";
+                                }
+
+                                <option data-value="@cultureUrl">@culture.ToUpper()</option>
+                            }
+                        </select>
+
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<!-- Login pop up -->
+@*<div class="modal fade" data- id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="login-partial">
+                    @Html.Partial("_Login", new LoginModel())
+                </div>
+                <div class="restore-pass-partial" style="display: none">
+                    @Html.Partial("_Restore_Password", new RestorePasswordModel())
+                </div>
+                <div class="change-pass-partial" style="display: none">
+                    @Html.Partial("_Change_Password", new ChangePasswordModel())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<!-- Register pop up -->
+@*<div class="modal fade" data- id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                @Html.Partial("_Register")
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<!-- Terms and conditions pop up -->
+@Html.Partial("_TermsPopUp")
+
+<script>
+    var successErrorMessagesDictionary = {
+        'calculationErrorMsg': '@calculationErrorMessage',
+        'calculationLinkErrorMsg':'@calculationLinkErrorMessage',
+        'projectDeleteMsg': '@projectDeleteMessage',
+        'projectEmailMsg': '@projectEmailMessage',
+        'projectErrorMsg': '@projectErrorMessage',
+        'projectPrintMsg': '@projectPrintMessage',
+        'projectSaveMsg': '@projectSaveMessage',
+        'memberRecoveryPasswordMsg': '@memberRecoveryPasswordMsg'
+    }
+
+    window.culture = "@currentCulture.Culture.ToUpper()";
+
+    $(document).ready(function() {
+        @if (TempData["FailedLoginValidation"] != null)
+        {
+            if ((bool)TempData["FailedLoginValidation"])
+            {
+                <text>
+                    $(".login").click();
+                    setTimeout(function(){ $("#email, #password").addClass("is-filled"); }, 100);
+                </text>
+            }
+        }
+
+        @if (TempData["FailedRegisterValidation"] != null)
+        {
+            if ((bool)TempData["FailedRegisterValidation"])
+            {
+                <text>
+                    $(".register").click();
+                    setTimeout(function(){ $("#registerModel_Name, #registerModel_Email, #registerModel_Password").closest(".form-group").addClass("is-filled"); }, 100);
+                </text>
+            }
+        }
+
+        @if (TempData["ChangePassword"] != null)
+        {
+            if ((bool)TempData["ChangePassword"])
+            {
+                <text>
+                    $(".login-partial").css("display", "none");
+                    $(".restore-pass-partial").css("display", "none");
+                    $(".change-pass-partial").css("display", "block");
+                    $(".login").click();
+                    setTimeout(function(){ $("#email, #password").addClass("is-filled"); }, 100);
+                </text>
+            }
+        }
+
+        $(".login-forgot-pass-link").on("click", function() {
+            $(".login-partial").css("display", "none");
+            $(".restore-pass-partial").css("display", "block");
+            $(".change-pass-partial").css("display", "none");
+        });
+        $(".forgot-pass-btn, .change-pass-cancel").on("click", function() {
+            $(".restore-pass-partial").css("display", "none");
+            $(".change-pass-partial").css("display", "none");
+            $(".login-partial").css("display", "block");
+        });
+
+        var currentBrowser = browserDetect();
+        if (currentBrowser.name === "ie" && currentBrowser.versionNumber < 11) {
+            $('.browserWarning').show();
+        }
+    });
+</script>

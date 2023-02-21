@@ -1,0 +1,122 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<REDAirCalculator.Models.RegistrationModels.LoginModel>
+@using Umbraco.Web
+
+@{
+    // popup
+    string loginTitle = Umbraco.GetDictionaryValue("Login title");
+    string loginDescription = Umbraco.GetDictionaryValue("Login description");
+    string loginUserName = Umbraco.GetDictionaryValue("Login username");
+    string loginPassword = Umbraco.GetDictionaryValue("Login password");
+    string loginForgotPassword = Umbraco.GetDictionaryValue("Login forgot password");
+    string loginRememberMeText = Umbraco.GetDictionaryValue("Login remember me text");
+    string loginButton = Umbraco.GetDictionaryValue("Login button");
+    string loginFirstTimeHere = Umbraco.GetDictionaryValue("First time here ?");
+    string loginRegisterNow = Umbraco.GetDictionaryValue("Register now");
+
+    // validation
+    string loginNameRequired = Umbraco.GetDictionaryValue("Login name required");
+    string loginPasswordRequired = Umbraco.GetDictionaryValue("Login password required");
+}
+
+<form id="login" action="" enctype="multipart/form-data" method="post" class="login-form">
+    @using (Html.BeginUmbracoForm("SubmitLogin", "Members", System.Web.Mvc.FormMethod.Post, new { id = "login", }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Hidden("entryGuid", TempData["Forms_Current_Record_id"], new { id = "entryGuid_login" })
+        @Html.Hidden("formGuid", TempData["FormGuid"], new { id = "formGuid_login" })
+
+        <button type="button" class="close-btn close btn btn-lg disabled" data-dismiss="modal" aria-label="Close">
+            ✕
+        </button>
+        <h3 class="modal-title title" id="exampleModalLongTitle">@loginTitle</h3>
+        <p class="description">@loginDescription</p>
+
+        <div class="form-group" id="email">
+            <label for="loginEmailInput Username"
+                   class="bmd-label-floating">@loginUserName</label>
+                <input type="text"
+                       class="form-control"
+                       id="loginEmailInput Username"
+                       name="Username"
+                       data-val="true"
+                       data-val-required="@loginNameRequired"
+                       value="">
+                <span class="field-validation-valid bmd-help"
+                      data-valmsg-for="Username"
+                      data-valmsg-replace="true">
+                </span>
+            </div>
+            <div class="form-group" id="password">
+                <label for="loginPasswordInput Password"
+                       class="bmd-label-floating">@loginPassword</label>
+                    <input type="password"
+                           class="form-control"
+                           id="loginPasswordInput Password"
+                           name="Password"
+                           data-val="true"
+                           data-val-required="@loginPasswordRequired"
+                           value="">
+                    <span class="field-validation-valid bmd-help"
+                          data-valmsg-for="Password"
+                          data-valmsg-replace="true">
+                    </span>
+                </div>
+
+                @Html.ValidationSummary()
+
+                <div class="login-forgot-pass">
+                    <div class="bmd-form-group login-forgot-pass-link">
+                        <a href="#">@loginForgotPassword</a>
+                    </div>
+                    <div class="checkbox remember-me-checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   id="loginRememberMeInput RememberMe"
+                                   name="RememberMe"> @loginRememberMeText
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="login-form bmd-form-group register-now">
+                        <div>
+                            <p>@loginFirstTimeHere </p>
+                        </div>
+                        <div>
+                            <a data-toggle="modal"
+                               data-target="#registerModal"
+                               data-dismiss="modal"
+                               href="#">
+                                @loginRegisterNow
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="submit-btn-container">
+                        <button name="login" type="submit" class="btn btn-primary submit-btn">@loginButton</button>
+                    </div>
+
+                    <div class="login-form bmd-form-group register-now auth0-container">
+                        <div>
+                            <p>Authorize using </p>
+                        </div>
+                        <div>
+                            <a href="/umbraco/surface/auth0/authenticate?forceAuth0=true">
+                                <img src="~/Content/images/auth0.svg" />
+                                <p> Auth0</p>
+                            </a>
+                        </div>
+                    </div>
+                }
+</form>
+
+<script>
+    $(document).ready(function () {
+        @if(TempData["Notification"] != null)
+        {
+        <text>
+        header.messages.addNotification("@TempData["Notification"]");
+        </text>
+        }
+    });
+</script>

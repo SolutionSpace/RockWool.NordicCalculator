@@ -1,0 +1,44 @@
+﻿@using REDAirCalculator.Models.DTO
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = null;
+
+    CalculatedDataDto calculatedData = TempData["CalculatedData"] as CalculatedDataDto;
+
+    TempData["Products"] = calculatedData.Products;
+    TempData["LoadCalculations"] = calculatedData.LoadCalculations;
+    TempData["ForMulti"] = calculatedData.ForMultiModel;
+    TempData["DesignCheck"] = calculatedData.DesignCheckModel;
+    TempData["DescriptionModel"] = calculatedData.DescriptionModel;
+
+    bool showAll = (bool) TempData["ShowAllResults"];
+    bool isMulti = (bool)TempData["IsMulti"];
+}
+
+    <div class="result-container">
+
+        <div class="result-tittle-container">
+            <h3 class="result-tittle">@Model.ResulterPageTilte</h3>
+        </div>
+
+        @Html.Partial("~/Views/Partials/ResulterSections/_Products.cshtml")
+        @Html.Partial("~/Views/Partials/ResulterSections/_Description.cshtml")
+        @Html.Partial("~/Views/Partials/ResulterSections/_LoadCalculations.cshtml")
+
+        @if (isMulti && showAll)
+        {
+            @Html.Partial("~/Views/Partials/ResulterSections/_ForMulti.cshtml")
+        }
+
+        @Html.Partial("~/Views/Partials/ResulterSections/_DesignCheck.cshtml")
+
+        <div class="result-description-container">
+            <div class="result-description-text-container">
+                <div class="result-description-text">
+                    @Model.Value("resulterEndText", fallback: Fallback.ToDefaultValue)
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,1 @@
+//# sourceMappingURL=IOpeningItem.js.map

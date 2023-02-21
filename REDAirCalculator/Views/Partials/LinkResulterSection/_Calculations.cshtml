@@ -1,0 +1,41 @@
+﻿@using REDAirCalculator.Models.ResultModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<LinkCalculator>
+
+@{
+    Layout = null;
+
+    LinkCalculationsModel calculationsModel = TempData["LinkCalculationsPart"] as LinkCalculationsModel;
+}
+
+
+    <div class="result-calculations-container">
+        <div class="result-calculations-tittle-container">
+            <h3 class="result-calculations-tittle">
+              @Model.HeadingCalculations
+            </h3>
+        </div>
+
+        <div class="result-calculations-table-container">
+            <table class="result-calculations-table border table-striped table-hover">
+                <colgroup>
+                    <col class="col-Calculations-Name col-6">
+                    <col class="col-Calculations-Number col-5">
+                </colgroup>
+                <thead class="calculations-table-header table-header border-bottom">
+                    
+                </thead>
+                <tbody>                   
+                    <tr class="calculations-table-row border">
+                        <td>
+                            @Model.SumOfNeededLbm
+                        </td>
+                        <td>
+                            @calculationsModel.SumOfNeededLBM
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>

@@ -1,0 +1,46 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Home>
+
+@{
+    Layout = "Master.cshtml";
+    ViewBag.Title = Model.Title;
+
+    IEnumerable<IPublishedContent> rootNodes = UmbracoContext.ContentCache.GetAtRoot().First().Children();
+    FlexMultiCalculator calculatorPage = (FlexMultiCalculator)rootNodes.FirstOrDefault(d => d.ContentType.Alias == "flexMultiCalculator");
+    LinkCalculator linkCalculatorPage = (LinkCalculator)rootNodes.FirstOrDefault(d => d.ContentType.Alias == "linkCalculator");
+
+}
+
+<div class="start-container text-center">
+    <div class="start-picture">
+        <img class="img-fluid" src="~/Content/images/start-picture.png" />
+    </div>
+
+    <h1 class="start-heading">
+        @Model.Title
+    </h1>
+
+    <h6 class="start-sub-heading">
+        @Model.Description
+    </h6>
+
+    <div class="home-buttons">
+        <button type="button"
+                class="btn start-button facade-btn"
+                onclick="location.href = '@calculatorPage.Url()'">
+            <img src="~/Content/images/facade.png" />
+            <div>@Model.FacadeTitle</div>
+            <div class="start-description">@Model.FacadeDescription</div>
+        </button>
+
+        <button type="button"
+                class="btn start-button vinduer-btn"
+                onclick="location.href = '@linkCalculatorPage.Url()'">
+            <img src="~/Content/images/vinduer.png"/>
+            <div>@Model.WindowsTitle</div>
+            <div class="start-description">@Model.WindowDescription</div>
+        </button>
+      
+    </div>
+</div>
+
+

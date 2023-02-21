@@ -1,0 +1,278 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.FlexTable>
+@using REDAirCalculator.DAL
+@using REDAirCalculator.Models.CalculationModels
+@using REDAirCalculator.Models.DTO
+@using REDAirCalculator.Utilities
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@using Umbraco.Web.Security
+
+@{
+    Layout = "Master.cshtml";
+    ViewBag.Title = Model.Name;
+
+    IUmbracoContextFactory contextFactory = DependencyResolver.Current.GetService<IUmbracoContextFactory>();
+
+    var lang = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    var _settingsRepository = new SettingsRepository(contextFactory, lang);
+
+    var insulationThicknessList = _settingsRepository.GetInsulationThicknessList();
+    var frictionCoefList = _settingsRepository.GetFrictionCoefList();
+    var anchorScrewList = _settingsRepository.GetAnchorScrewList();
+    var terrainCategoryList = _settingsRepository.GetTerrainCategoryList();
+    var consequenceClassList = _settingsRepository.GetConsequenceClassList();
+
+    var defValues = new FormDataDto
+    {
+        InsulationThickness = insulationThicknessList.ElementAt(0).Name,
+        FrictionCoef = frictionCoefList.ElementAt(0).Name,
+        AnchorScrewDesign = anchorScrewList.ElementAt(1).Name,
+        ConsequenceClass = consequenceClassList.ElementAt(0).Name,
+        TerrainCategory = terrainCategoryList.ElementAt(0).Name,
+        CladdingWeight = 20,
+        Height = 20,
+        Vbo = 24,
+        AnchorScrewDesignOwnValue = 0,
+        FrictionCoefOwnValue = 0
+    };
+    var data = TempData["data"] as IEnumerable<TableResultModel>;
+    if (TempData["data"] != null)
+    {
+        defValues = TempData["defaultValues"] as FormDataDto;
+    }
+}
+
+<div class="admin-table-container">
+    <div class="admin-form">
+        <form method="post" action="/umbraco/surface/Tables/GetFlexTableData" class="form">
+            <div class="dropdown-field form-control ">
+                <label class=" col-6">Thickness </label>
+                <select name="insulationThickness" class="calculator-selector col-6 ">
+                    @foreach (var row in insulationThicknessList)
+                    {
+                        if (row.Name == defValues.InsulationThickness)
+                        {
+                            <option class="dropdown-item" value="@row.Name" selected>@row.Name</option>
+                        }
+                        else
+                        {
+                            <option class="dropdown-item" value="@row.Name">@row.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown-field form-control ">
+                <label class="col-6">Friction Coefficient </label>
+                <select name="FrictionCoef" id="FrictionCoef" class="calculator-selector  col-6">
+                    @foreach (var row in frictionCoefList)
+                    {
+                        if (row.Name == defValues.FrictionCoef)
+                        {
+                            <option class="dropdown-item" value="@row.Name" selected>@row.Name</option>
+                        }
+                        else
+                        {
+                            <option class="dropdown-item" value="@row.Name">@row.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown-field text-field" id="frictionOwnType">
+                <label class="form-control col-6">Enter Own Value </label>
+                <input type="text" id="frictionOwnTypeValue" name="FrictionCoefOwnValue" value="@defValues.FrictionCoefOwnValue" class="form-control col-6"><br>
+            </div>
+
+            <div class="dropdown-field form-control ">
+                <label class="col-6">Anchor Screw Pull </label>
+                <select name="AnchorScrewDesign" id="AnchorScrewDesign" class="calculator-selector  col-6">
+                    @foreach (var row in anchorScrewList)
+                    {
+                        if (row.Name == defValues.AnchorScrewDesign)
+                        {
+                            <option class="dropdown-item" value="@row.Name" selected>@row.Name</option>
+                        }
+                        else
+                        {
+                            <option class="dropdown-item" value="@row.Name">@row.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown-field text-field" id="anchorOwnType">
+                <label class="form-control col-6">Enter Own Value </label>
+                <input type="text" id="anchorOwnTypeValue" name="AnchorScrewDesignOwnValue" value="@defValues.AnchorScrewDesignOwnValue" class="form-control col-6"><br>
+            </div>
+
+            <div class="dropdown-field form-control ">
+                <label class="col-6">Consequence Class </label>
+                <select name="ConsequenceClass" class="calculator-selector  col-6">
+                    @foreach (var row in consequenceClassList)
+                    {
+                        if (row.Name == defValues.ConsequenceClass)
+                        {
+                            <option class="dropdown-item" value="@row.Name" selected>@row.Name</option>
+                        }
+                        else
+                        {
+                            <option class="dropdown-item" value="@row.Name">@row.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown-field form-control ">
+                <label class="col-6">Terrain Category </label>
+                <select name="TerrainCategory" class="calculator-selector  col-6">
+                    @foreach (var row in terrainCategoryList)
+                    {
+                        if (row.Name == defValues.TerrainCategory)
+                        {
+                            <option class="dropdown-item" value="@defValues.TerrainCategory" selected>@row.Name</option>
+                        }
+                        else
+                        {
+                            <option class="dropdown-item" value="@row.Name">@row.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown-field text-field">
+                <label class="form-control col-6">Cladding Weight </label>
+                <input type="text" name="CladdingWeight" value="@defValues.CladdingWeight" class="form-control col-6"><br>
+            </div>
+            <div class="dropdown-field text-field">
+                <label class="form-control col-6">Height </label>
+                <input type="text" name="Height" value="@defValues.Height" class="form-control col-6"><br>
+            </div>
+            <div class="dropdown-field text-field">
+                <label class="form-control col-6">Wind speed </label>
+                <input type="text" name="Vbo" value="@defValues.Vbo" class="form-control col-6"><br>
+            </div>
+
+            <div class="calculator-wrapper ">
+                <input type="submit" class="btn primary btn-calculator float-right" alue="Submit" />
+            </div>
+
+        </form>
+    </div>
+
+    @if (data != null)
+    {
+        <div class="admin-table">
+            <table class="border table table-striped table-hover">
+
+                <thead class="admin-table-header border-bottom">
+
+                    <tr class="border">
+                        <th>Index</th>
+                        <th>Screws pr.</th>
+                        <th>Screws pr. m2</th>
+                        <th>System Parts Weight</th>
+                        <th>Base Rail Distance</th>
+                        <th>Screw Distance</th>
+                        <th>Comp. Depth</th>
+
+                        <th>Friction Guaranteed</th>
+                        <th></th>
+                        <th>Friction Necessary</th>
+                        <th>Friction Boolean</th>
+
+                        <th>Comp. Depth FMax</th>
+                        <th>Wind</th>
+                        <th>Prestress</th>
+                        <th>Anchor Guaranteed</th>
+                        <th></th>
+                        <th>Anchor Necessary</th>
+                        <th>Anchor Boolean</th>
+                        <th>CC Boolean</th>
+                        <th>All Boolean</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (TableResultModel row in data)
+                    {
+                        <tr class="admin-table-row border">
+                            <td>
+                                <span>@(data.IndexOf(row) + 1)</span>
+                            </td>
+                            <td>@($"{row.ScrewsPr:0.00}")</td>
+                            <td>@($"{row.ScrewsPrM:0.00}")</td>
+                            <td>@row.SystemPartsWeight</td>
+                            <td>@row.BaseRailSpacing</td>
+                            <td>@row.ScrewDist</td>
+                            <td>@row.CompressionDepth</td>
+
+                            <td>@($"{row.FrictionGuaranteed:0.0}")</td>
+                            @if (row.FrictionGuaranteed > row.FrictionNecessary)
+                            {
+                                <td> > </td>}
+                            else
+                            {
+                                <td> < </td>}
+                            <td>@($"{row.FrictionNecessary:0.0}")</td>
+                            @if (row.FrictionGuaranteed > row.FrictionNecessary)
+                            {
+                                <td class="true-boolean"> TRUE </td>}
+                            else
+                            {
+                                <td class="false-boolean"> FALSE </td>}
+
+                            <td>@row.CompressionDepthFMax</td>
+
+                            <td>@row.Wind</td>
+                            <td>@row.Prestress</td>
+                            <td>@($"{row.AnchorGuaranteed:0.0}")</td>
+                            @if (row.AnchorGuaranteed > row.AnchorNecessary)
+                            {
+                                <td> > </td>}
+                            else
+                            {
+                                <td> < </td>}
+                            <td>@($"{row.AnchorNecessary:0.00}")</td>
+                            @if (row.AnchorGuaranteed > row.AnchorNecessary)
+                            {
+                                <td class="true-boolean"> TRUE </td>}
+                            else
+                            {
+                                <td class="false-boolean"> FALSE </td>}
+                            @if (row.CCBoolean)
+                            {
+                                <td class="true-boolean"> TRUE </td>}
+                            else
+                            {
+                                <td class="false-boolean"> FALSE </td>}
+                            @if (row.AllTrue)
+                            {
+                                <td class="true-boolean"> TRUE </td>}
+                            else
+                            {
+                                <td class="false-boolean"> FALSE </td>}
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script type='text/javascript'>
+        window.jsAnchorScrewAdminList =  @JavaScriptConvert.SerializeObject(anchorScrewList.Select(x => x.Name));
+        window.jsFrictionAdminList =  @JavaScriptConvert.SerializeObject(frictionCoefList.Select(x => x.Name));
+    </script>
+
+    @Html.VersionedFile("/Scripts/admin-tables.js")
+
+    <script>
+        $(document).ready(function () {
+            adminTable.onAnchorOwnValue();
+            adminTable.onFrictionOwnValue();
+        });
+    </script>
+}

@@ -1,0 +1,154 @@
+﻿@using System.Configuration
+@using REDAirCalculator.Models.DTO
+@using REDAirCalculator.Utilities
+@using Umbraco.Forms.Core.Models
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<LinkCalculator>
+
+@{
+    Layout = "Master.cshtml";
+    ViewBag.Title = "Link";
+    bool isResulter = (bool)TempData["IsResulter"];
+    bool hasLinkCalculationError = (bool)TempData["HasLinkCalculationError"];
+    int projectsType = 1;
+    TempData["ProjectsType"] = projectsType;
+
+    // for opening types
+    Form form = FormHelper.GetForm(new Guid(TempData["FormGuid"].ToString()));
+    string openingTypes = FormHelper.GetFormFieldByName(form, "openingTypes").Id.ToString();
+
+    string language = Model.GetCulture().Culture;
+
+    if (language != "en" && language != "da" && language != "fi")
+    {
+        string cityField = FormHelper.GetFormFieldByName(form, "city").Id.ToString();
+        string windSpeedAreaField;
+        try
+        {
+            windSpeedAreaField = FormHelper.GetFormFieldByName(form, "windSpeedArea").Id.ToString();
+        }
+        catch
+        {
+            windSpeedAreaField = "";
+        }
+
+        string windSpeedAreaValue = string.Empty;
+        string cityValue = string.Empty;
+        if (isResulter)
+        {
+            LinkFormDataDto formData = TempData["FormData"] as LinkFormDataDto;
+
+            windSpeedAreaValue = formData.WindSpeedArea;
+            cityValue = formData.City;
+        }
+
+        var windSpeedDict = (Dictionary<string, List<string>>)TempData["WindSpeedData"];
+
+        <script type='text/javascript'>
+        window.windSpeedAreaValue = "@windSpeedAreaValue";
+        window.cityValue = "@cityValue";
+
+
+        window.cityFieldId = "@cityField";
+        window.windSpeedAreaFieldId = "@windSpeedAreaField";
+
+        window.AreaCityDictionary = {};
+        @foreach(KeyValuePair<string, List<string>> entry in windSpeedDict)
+        {
+        <text>
+            var cityArr =  @JavaScriptConvert.SerializeObject(entry.Value);
+            window.AreaCityDictionary["@entry.Key"] = cityArr;
+        </text>
+        }
+        </script>
+    }
+
+
+
+    //translates
+    string translateWidth = Model.HeadingWidth;
+    string translateHeight = Model.HeadingHeight;
+    string translateShouldBeLess = Umbraco.GetDictionaryValue("Should be less");
+    string translateShouldBeGreater = Umbraco.GetDictionaryValue("Should be greater");
+    string translateIsRequired = Umbraco.GetDictionaryValue("Is required");
+    string translateType = Umbraco.GetDictionaryValue("Type");
+    string PlanksValidationMessageMin = Umbraco.GetDictionaryValue("Planks depth (min)");
+    string PlanksValidationMessageMax = Umbraco.GetDictionaryValue("Planks depth (max)");
+
+    TempData["typeTranslate"] = translateType;
+    TempData["translateWidth"] = translateWidth;
+    TempData["translateHeight"] = translateHeight;
+    TempData["translateIsRequired"] = translateIsRequired;
+}
+
+@section Navigation {
+    @Html.Partial("_Navigation")
+}
+
+
+<script>
+
+    window.PlanksValidationMessageMax = "@PlanksValidationMessageMax.ToString()";
+    window.PlanksValidationMessageMin = "@PlanksValidationMessageMin.ToString()";
+</script>
+<div class="calculator-wrapper">
+    @Umbraco.RenderMacro("renderUmbracoForm", new
+    {
+   FormGuid = TempData["FormGuid"],
+   FormTheme = TempData["Theme"],
+   ExcludeScripts = "0"
+})
+</div>
+@if (isResulter)
+{
+    @Html.Partial("_LinkResulter")
+}
+
+@section Scripts {
+    @if (isResulter || hasLinkCalculationError)
+    {
+        <script>
+            window.projectsApiPath = '@ConfigurationManager.AppSettings["projectsApiPath"]';
+            window.projectsType = "@projectsType.ToString()";
+        </script>
+    }
+
+    @Html.VersionedFile("/Scripts/calculator.js")
+
+    @if (isResulter)
+    {
+        @Html.VersionedFile("/Scripts/resulter.js")
+    }
+
+
+
+    @if (hasLinkCalculationError)
+    {
+        <script>
+            $(document).ready(function () {
+                header.messages.addNotification("calc-link-error:calc-link-error:5000000");
+            });
+        </script>
+    }
+    <script type='text/javascript'>
+        window.openingTypesId = "@openingTypes";
+        window.openingTypesList =  @JavaScriptConvert.SerializeObject(TempData["openingTypesList"]);
+        window.windowType = "@Model.Window";
+        window.doorType = "@Model.Door";
+
+        window.translateWidth = "@translateWidth";
+        window.translateHeight = "@translateHeight";
+        window.translateShouldBeLess = "@translateShouldBeLess";
+        window.translateShouldBeGreater = "@translateShouldBeGreater";
+        window.translateIsRequired = "@translateIsRequired";
+        window.translateType = "@translateType";
+
+    </script>
+
+    @Html.VersionedFile("/Scripts/opening-types.js")
+
+    @Html.VersionedFile("/Scripts/form-combinations.js")
+    <script>
+            window.hasLinkCalculationError = "@hasLinkCalculationError";
+    </script>
+}

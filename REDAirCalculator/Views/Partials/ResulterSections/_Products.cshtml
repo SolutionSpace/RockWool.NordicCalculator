@@ -1,0 +1,146 @@
+﻿@using REDAirCalculator.Models.DTO
+@using REDAirCalculator.Models.ResultModels
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<FlexMultiCalculator>
+
+@{
+    Layout = null;
+    var parentModel = (FlexMultiCalculator)Umbraco.AssignedContentItem;
+    string norwegianUnitName = parentModel.UnitName;
+    string norwegianComponentName = parentModel.ComponentName;
+    string norwegianQuantityDelivered = parentModel.QuantityDeliveredMessage;
+    string _lang = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    bool isMulti = (bool)TempData["IsMulti"];
+    QuantityCalculationsModel products = TempData["Products"] as QuantityCalculationsModel;
+
+    string oldValue = "2";
+    string newValue = "<sup>" + oldValue + "</sup>";
+}
+
+<div class="result-table-container">
+    <table class="result-table border table-striped table-hover">
+        <colgroup>
+            <col class="col-Item-Number col-2">
+            <col class="col-Quantity col-1">
+            <col class="col-Description col-9">
+        </colgroup>
+        <thead class="result-table-header table-header border-bottom">
+            <tr class="border head-border">
+                <th>@Model.ItemProductNumberColText</th>
+                <th>@Model.ItemsCountColText</th>
+                <th>@Model.ItemDescriptionColText</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in products.MineralWool)
+            {
+                string woolUnitsName = item.UnitsPerPackage.Name.Replace(oldValue, newValue);
+                string woolNecessaryName = item.Nessasary.Name.Replace(oldValue, newValue);
+                string woolPackagingName = item.InPackaging.Name.Replace(oldValue, newValue);
+
+                <tr class="result-table-row border">
+                    <td>
+                        <span class="sap-number">@item.SAPNumber</span>
+                        @if (item.HasDbNumber)
+                        {<span class="db-number"><br />@item.DBLabel: @item.DBNumber</span>}
+                    </td>
+                    <td>@item.Amount</td>
+                    <td>
+                        (@if (item.Amount == 1){<span>@item.UnitInSingular</span>} else {<span>@item.Units</span>}) @item.Name (@item.UnitsPerPackage.Value @Html.Raw(woolUnitsName) / @item.UnitInSingular )<br />
+                        <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @item.Nessasary.Value @Html.Raw(woolNecessaryName)<br /></span>
+                        <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @item.InPackaging.Value @Html.Raw(woolPackagingName)</span>
+                </td>
+            </tr>
+        }
+
+            @if (products.Screws != null)
+            {
+                ProductDto screws = products.Screws;
+
+                string screwsUnitsName = screws.UnitsPerPackage.Name.Replace(oldValue, newValue);
+                string screwsNecessaryName = screws.Nessasary.Name.Replace(oldValue, newValue);
+                string screwsPackagingName = screws.InPackaging.Name.Replace(oldValue, newValue);
+
+
+                <tr class="result-table-row border">
+                    <td>
+                        <span class="sap-number">@screws.SAPNumber</span>
+                        @if (screws.HasDbNumber)
+                        {<span class="db-number"><br />@screws.DBLabel: @screws.DBNumber</span>}
+                    </td>
+                    <td>@screws.Amount</td>
+                    <td>
+                        (@if (screws.Amount == 1){<span>@screws.UnitInSingular</span>}else{<span>@screws.Units</span>}) @screws.Name (@screws.UnitsPerPackage.Value @Html.Raw(screwsUnitsName) / @screws.UnitInSingular )<br />
+                        <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @screws.Nessasary.Value @Html.Raw(screwsNecessaryName)<br /></span>
+                        <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @screws.InPackaging.Value @Html.Raw(screwsPackagingName)</span>
+                </td>
+            </tr>
+        }
+
+
+            @{
+                ProductDto rail = products.Rail;
+
+                string railUnitsName = rail.UnitsPerPackage.Name.Replace(oldValue, newValue);
+                string railNecessaryName = rail.Nessasary.Name.Replace(oldValue, newValue);
+                string railPackagingName = rail.InPackaging.Name.Replace(oldValue, newValue);
+            }
+
+            <tr class="result-table-row border">
+                <td>
+                    @if (!isMulti && _lang == "no")
+                    {
+
+                    }
+                    else
+                    {
+                        <span class="sap-number">@rail.SAPNumber</span>
+                        if (rail.HasDbNumber)
+                        {<span class="db-number"><br />@rail.DBLabel: @rail.DBNumber</span>}
+                    }
+                </td>
+                <td>@if (!isMulti && _lang == "no") { @rail.Nessasary.Value } else { @rail.Amount }</td>
+                <td>
+                    @if (!isMulti && _lang == "no") {
+                        <span>(@norwegianUnitName) @norwegianComponentName</span><br />
+                        <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @rail.Nessasary.Value @Html.Raw(railNecessaryName)<br /></span>
+                        <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @norwegianQuantityDelivered</span>
+                    }
+                    else {
+                        <text>(</text>if (rail.Amount == 1){<span>@rail.UnitInSingular</span>} else{<span>@rail.Units</span>}<text>)</text> @rail.Name <text>(</text> @rail.UnitsPerPackage.Value @Html.Raw(railUnitsName) <text>/</text> @rail.UnitInSingular <text>)</text> <br />
+                        <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @rail.Nessasary.Value @Html.Raw(railNecessaryName)<br /></span>
+                        <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @rail.InPackaging.Value @Html.Raw(railPackagingName)</span>
+                    }
+
+                    @*(@if (rail.Amount == 1){<span>@rail.UnitInSingular</span>} else{<span>@rail.Units</span>}) @rail.Name (@rail.UnitsPerPackage.Value @Html.Raw(railUnitsName) / @rail.UnitInSingular )<br />
+                    <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @rail.Nessasary.Value @Html.Raw(railNecessaryName)<br /></span>
+                    <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @rail.InPackaging.Value @Html.Raw(railPackagingName)</span>*@
+                </td>
+        </tr>
+
+        @foreach (var item in products.Accessories)
+        {
+            string accessoriesUnitsName = item.UnitsPerPackage.Name.Replace(oldValue, newValue);
+            string accessoriesNecessaryName = item.Nessasary.Name.Replace(oldValue, newValue);
+            string accessoriesPackagingName = item.InPackaging.Name.Replace(oldValue, newValue);
+
+            <tr class="result-table-row border">
+                <td>
+                    <span class="sap-number">@item.SAPNumber</span>
+                    @if (item.HasDbNumber)
+                    {<span class="db-number"><br />@item.DBLabel: @item.DBNumber</span>}
+                </td>
+                <td>@item.Amount</td>
+                <td>
+                   (@if (item.Amount == 1) {<span>@item.UnitInSingular</span>} else {<span>@item.Units</span>}) @item.Name (@item.UnitsPerPackage.Value @Html.Raw(accessoriesUnitsName) / @item.UnitInSingular )<br />
+                    <span class="amount">@Model.Value("estimatedAmount", fallback: Fallback.ToDefaultValue): @item.Nessasary.Value @Html.Raw(accessoriesNecessaryName)<br /></span>
+                    <span class="amount">@Model.Value("quantityDelivered", fallback: Fallback.ToDefaultValue): @item.InPackaging.Value @Html.Raw(accessoriesPackagingName)</span>
+            </td>
+        </tr>
+    }
+
+    </tbody>
+</table>
+</div>
+
+
